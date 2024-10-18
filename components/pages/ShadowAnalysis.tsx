@@ -18,6 +18,8 @@ import {
   Sun,
   Bell,
   Info,
+  Paperclip,
+  MoveLeft,
 } from "lucide-react"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -26,9 +28,9 @@ import { Month } from "../ui/month"
 import { HourMonth } from "../hour-month"
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
 import { Button } from "@/components/ui/button"
-import { SunCanvas } from "@/components/sun-canvas"
+// import { SunCanvas } from "@/components/sun-canvas"
 import { Badge } from "@/components/ui/badge"
-
+import Experience from "@/canvas/Experience"
 const ShadowAnalysis = () => {
 
 const searchParams = useSearchParams()
@@ -37,32 +39,6 @@ const searchParams = useSearchParams()
   const longitude = searchParams.get("longitude")
   const propertyName = searchParams.get("propertyName")
   const screenshot = searchParams.get("screenshot")
-
-  // return (
-  //   <div className="flex justify-center items-center min-h-full">
-  //     <Card className="mx-auto max-w-sm">
-  //       <CardHeader>
-  //         <CardTitle className="text-xl">Workspace</CardTitle>
-  //       </CardHeader>
-  //       <CardContent>
-  //         <div className="grid gap-4">
-  //           <div>
-  //             <strong>Latitude:</strong> {latitude}
-  //           </div>
-  //           <div>
-  //             <strong>Longitude:</strong> {longitude}
-  //           </div>
-  //           <div>
-  //             <strong>Property Name:</strong> {propertyName}
-  //           </div>
-  //           <div>
-  //             <strong>Screenshot:</strong> {screenshot}
-  //           </div>
-  //         </div>
-  //       </CardContent>
-  //     </Card>
-  //   </div>
-  // )
 
    return (
     <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
@@ -133,7 +109,7 @@ const searchParams = useSearchParams()
           </div>
           <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
             <div className="w-[1088px] h-[800px]">
-            <SunCanvas />
+            <Experience />
             </div>
             <Badge variant="outline" className="absolute left-6 top-6">
               Output
@@ -142,7 +118,13 @@ const searchParams = useSearchParams()
             <form
               className="relative overflow-hidden rounded-lg border bg-muted focus-within:ring-1 focus-within:ring-ring" x-chunk="dashboard-03-chunk-1"
             >
-              <div className="flex items-center p-3 pt-0 mt-3">   
+              <div className="flex items-center p-3 pt-0 mt-3 gap-2"> 
+                <Button>
+                  <Paperclip className="size-3.5" />
+                  </Button>  
+                  <Button>
+                  <Box className="size-3.5" />
+                  </Button>  
                 <Button  type="button" size="sm" className="ml-auto gap-1.5">
                   Reset
                   <SquareArrowOutDownLeft className="size-3.5" />

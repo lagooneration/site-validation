@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: "Citizen Corrects",
   description: "Shadow Analysis",
   icons: {
-    icon: "/logoOff.svg",
+    icon: "logo.ico",
   },
 };
 
