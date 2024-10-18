@@ -31,6 +31,9 @@ import { Button } from "@/components/ui/button"
 // import { SunCanvas } from "@/components/sun-canvas"
 import { Badge } from "@/components/ui/badge"
 import Experience from "@/canvas/Experience"
+import { SliderProvider } from '../ui/SliderContext'
+
+
 const ShadowAnalysis = () => {
 
 const searchParams = useSearchParams()
@@ -62,7 +65,7 @@ const searchParams = useSearchParams()
                   </div>
                   </div>
                   <div className="grid gap-3 w-1/2">
-                    <Day />               
+                    <Day />     
                     <Month />
                   </div>
               </fieldset>
@@ -109,7 +112,7 @@ const searchParams = useSearchParams()
           </div>
           <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
             <div className="w-[1088px] h-[800px]">
-            <Experience />
+                <Experience />
             </div>
             <Badge variant="outline" className="absolute left-6 top-6">
               Output

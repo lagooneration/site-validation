@@ -2,6 +2,7 @@ import { MeshProps, useFrame } from '@react-three/fiber';
 import { useRef, useMemo } from 'react';
 import { Mesh, TextureLoader, SRGBColorSpace, ShaderMaterial, Vector3, Color, BackSide, Uniform } from 'three';
 import { useControls } from 'leva';
+import { useSlider } from '@/components/ui/SliderContext';
 
 // Textures
 const textureLoader = new TextureLoader();
@@ -23,19 +24,26 @@ const earthParameters = {
 
 const Atmosphere: React.FC<MeshProps> = (props) => {
   const meshRef = useRef<Mesh>(null);
-  // const { scene } = useThree();
+  const { value } = useSlider();
+//   console.log(value)
+  const phi = value.daytime / (60 * 24) * Math.PI * 2; 
+  const theta = (value.month - 1) * (Math.PI * 2) / 12;
 
-  const { phi, theta } = useControls({
-    phi: { value: Math.PI * 0.2, min: -3.0, max: Math.PI, step: 0.01 },
-    theta: { value: 4.6, min: 0, max: Math.PI * 2, step: 0.01 }
-  });
+//   const { phi, theta } = useControls({
+//     phi: { value: Math.PI * 0.2, min: -3.0, max: Math.PI, step: 0.01 },
+//     theta: { value: 4.6, min: 0, max: Math.PI * 2, step: 0.01 }
+//   });
+
+    // const { theta } = useControls({
+    //     theta: { value: 4.6, min: 0, max: Math.PI * 2, step: 0.01 }
+    // });
 
   const sunDirection = useMemo(() => {
     const direction = new Vector3();
     direction.setFromSpherical({ radius: 1, phi, theta });
     return direction;
   }, [phi, theta]);
-
+    
   // const earthGeometry = useMemo(() => new SphereGeometry(2, 64, 64), []);
 
   const earthMaterial = useMemo(() => new ShaderMaterial({

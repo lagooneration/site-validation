@@ -42,7 +42,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import { Separator } from "@/components/ui/separator"
-
+import { SliderProvider } from '@/components/ui/SliderContext'
 
 const componentMap = {
   ShadowAnalysis,
@@ -66,6 +66,7 @@ export const MainContent = () => {
 
   return (
     <main className="flex-1 p-6 m-10">
+      <SliderProvider>
       {ActiveComponent ? <ActiveComponent /> : 
       <div className="chart-wrapper mx-auto flex max-w-6xl flex-col flex-wrap items-start justify-center gap-6 p-6 sm:flex-row sm:p-8">
       <div className="grid w-full gap-6 sm:grid-cols-2 lg:max-w-[22rem] lg:grid-cols-1 xl:max-w-[25rem]">
@@ -910,6 +911,7 @@ export const MainContent = () => {
     </div>}
 
       
+    </SliderProvider>
     </main>
   )
 }

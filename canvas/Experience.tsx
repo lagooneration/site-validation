@@ -8,12 +8,12 @@ import Atmosphere from '@/components/three/Atmosphere';
 
 const Experience = () => {
   return (
-    <Canvas camera={{ position: [5, 5, 5], fov: 75 }}>
+    <Canvas camera={{ position: [3, -3, 3], fov: 75 }}>
       <Lights />
-      <Cube position={[0, 1, 0]} />
+      {/* <Cube position={[0, 1, 0]} /> */}
       {/* <Plane rotation={[-Math.PI / 2, 0, 0]} /> */}
       <Atmosphere />
-      <Land texturePath="/assets/location1.png" position={[0, 0.5, -0.5]} rotation={[-Math.PI / 2, 0, 0]} castShadow/>
+      {/* <Land texturePath="/assets/location1.png" position={[0, 0.5, -0.5]} rotation={[-Math.PI / 2, 0, 0]} castShadow/> */}
       <OrbitControls />
     </Canvas>
   );
