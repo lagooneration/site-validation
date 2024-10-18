@@ -187,6 +187,7 @@ const Atmosphere: React.FC<MeshProps> = (props) => {
 
   return (
     <>
+    
       <mesh ref={meshRef} {...props}>
         <sphereGeometry args={[2, 64, 64]} />
         <primitive object={earthMaterial} attach="material" />

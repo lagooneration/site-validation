@@ -3,6 +3,7 @@ import { useHelper } from '@react-three/drei';
 import { useRef } from 'react';
 import { DirectionalLightHelper, SpotLightHelper } from 'three';
 import * as THREE from 'three';
+// import {Leva}  from 'leva'
 
 const Lights: React.FC = () => {
   const directionalLightRef = useRef<THREE.DirectionalLight>(null);
@@ -14,6 +15,7 @@ const Lights: React.FC = () => {
 
   return (
     <>
+
       {/* Ambient light for overall scene illumination */}
       <ambientLight intensity={0.1} />
 

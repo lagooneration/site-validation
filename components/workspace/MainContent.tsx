@@ -65,7 +65,7 @@ export const MainContent = () => {
 
 
   return (
-    <main className="flex-1 p-6 m-10">
+    <main className="flex-1 p-6 mt-12 ml-14">
       <SliderProvider>
       {ActiveComponent ? <ActiveComponent /> : 
       <div className="chart-wrapper mx-auto flex max-w-6xl flex-col flex-wrap items-start justify-center gap-6 p-6 sm:flex-row sm:p-8">
