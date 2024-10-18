@@ -70,7 +70,7 @@ export default function Home() {
           <div className="grid gap-2">
             <Label htmlFor="screenshot">Upload Screenshot</Label>
             {/* <Input id="screenshot" type="file" accept="image/*" onChange={handleInputChange} /> */}
-            <input id="screenshot" type="file" accept="image/*" onChange={handleInputChange}
+            <input id="screenshot" type="file" accept="image/*" required onChange={handleInputChange}
             className="block w-full text-sm text-gray-500
                   file:me-4 file:py-2 file:px-4
                   file:rounded-lg file:border-0
