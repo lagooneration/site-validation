@@ -7,7 +7,7 @@ import { Sunset, LandPlot, Book, Settings2, Info } from 'lucide-react'
 import Image from 'next/image'
 
 export const Sidebar = () => {
-    const { setActiveComponent } = useActiveComponent()
+    const { setActiveComponent, activeComponent } = useActiveComponent()
   return (
     <aside className="inset-y fixed left-0 z-20 flex h-full flex-col border-r">
       <div className="border-b p-2">
@@ -30,7 +30,9 @@ export const Sidebar = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-lg bg-muted"
+              className={`rounded-lg ${
+                activeComponent === 'ShadowAnalysis' ? 'bg-muted text-accent-foreground' : 'bg-background'
+              }`}
               aria-label="Shadow Analysis"
               onClick={() => setActiveComponent('ShadowAnalysis')}
             >
@@ -41,13 +43,15 @@ export const Sidebar = () => {
             Shadow Analysis
           </TooltipContent>
         </Tooltip>
-        {/* Models Button */}
+        {/* Property Details Button */}
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-lg"
+              className={`rounded-lg ${
+                activeComponent === 'PropertyDetails' ? 'bg-muted text-accent-foreground' : 'bg-background'
+              }`}
               aria-label="Property details"
               onClick={() => setActiveComponent('PropertyDetails')}
             >
@@ -64,7 +68,9 @@ export const Sidebar = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-lg"
+              className={`rounded-lg ${
+                activeComponent === 'Documentation' ? 'bg-muted text-accent-foreground' : 'bg-background'
+              }`}
               aria-label="Documentation"
               onClick={() => setActiveComponent('Documentation')}
             >
@@ -81,7 +87,9 @@ export const Sidebar = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-lg"
+              className={`rounded-lg ${
+                activeComponent === 'Settings' ? 'bg-muted text-accent-foreground' : 'bg-background'
+              }`}
               aria-label="Settings"
               onClick={() => setActiveComponent('Settings')}
             >
