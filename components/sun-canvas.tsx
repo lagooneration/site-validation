@@ -10,7 +10,8 @@ import TestGeo from "./test-geo"
 // import { useThree } from "@react-three/fiber"
 // import { useEffect } from "react"
 // import { Vector3 } from "three"
-import { useSearchParams } from 'next/navigation'
+// import { useSearchParams } from 'next/navigation'
+
 
 
 
@@ -18,11 +19,11 @@ import { useSearchParams } from 'next/navigation'
 
 
 export function SunCanvas() {
-    const searchParams = useSearchParams()
-    const mapTexture = searchParams.get("screenshot")
-    console.log(mapTexture)
+    // const searchParams = useSearchParams()
+    // const mapTexture = searchParams.get("screenshot")
+    // console.log(mapTexture)
 
-    const texture = mapTexture ? URL.createObjectURL(new Blob([mapTexture], { type: 'image/png' })) : "/assets/location1.png"
+    
 
 
     const color = useControls({

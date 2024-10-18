@@ -1,6 +1,6 @@
 import React from 'react'
 import { Sidebar } from '@/components/workspace/Sidebar'
-import { Header } from '@/components/workspace/Header'
+import Header from '@/components/workspace/Header'
 import { MainContent } from '@/components/workspace/MainContent'
 
 

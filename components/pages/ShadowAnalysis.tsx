@@ -132,10 +132,10 @@ const searchParams = useSearchParams()
             </form>
           </div>
           <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
-            <div className="w-[1150px] h-[800px]">
+            <div className="w-[1088px] h-[800px]">
             <SunCanvas />
             </div>
-            <Badge variant="outline" className="absolute right-3 top-3">
+            <Badge variant="outline" className="absolute left-6 top-6">
               Output
             </Badge>
             <div className="flex-1" />

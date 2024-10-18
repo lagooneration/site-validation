@@ -4,12 +4,15 @@ import { TextureLoader } from 'three';
 import { MeshProps } from '@react-three/fiber';
 import { useRef } from 'react';
 import { Mesh } from 'three';
+// import { useSearchParams } from 'next/navigation'
 
 interface PlaneWithTextureProps extends MeshProps {
   texturePath: string;  // Allow for dynamic textures if needed
 }
 
 const TestGeo: React.FC<PlaneWithTextureProps> = ({ texturePath, ...props }) => {
+  
+  
   // Load the texture using the Three.js TextureLoader
   const texture = useLoader(TextureLoader, texturePath);
   const meshRef = useRef<Mesh>(null!); // Ref for accessing the mesh if needed
