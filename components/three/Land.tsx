@@ -10,7 +10,7 @@ interface PlaneWithTextureProps extends MeshProps {
   texturePath: string;  // Allow for dynamic textures if needed
 }
 
-const TestGeo: React.FC<PlaneWithTextureProps> = ({ texturePath, ...props }) => {
+const Land: React.FC<PlaneWithTextureProps> = ({ texturePath, ...props }) => {
   
   
   // Load the texture using the Three.js TextureLoader
@@ -27,4 +27,4 @@ const TestGeo: React.FC<PlaneWithTextureProps> = ({ texturePath, ...props }) => 
   );
 };
 
-export default TestGeo;
+export default Land;
