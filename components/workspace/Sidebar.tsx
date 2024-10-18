@@ -18,6 +18,7 @@ export const Sidebar = () => {
               width={24}
               height={24}
               priority
+              onClick={() => setActiveComponent('MainContent')}
             />
 
           </Button>
