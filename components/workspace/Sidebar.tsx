@@ -1,10 +1,13 @@
+"use client"
 import React from 'react'
+import { useActiveComponent } from '@/hooks/useActiveComponent'
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { SquareTerminal, Bot, Code2, Book, Settings2, LifeBuoy, SquareUser } from 'lucide-react'
+import { Sunset, LandPlot, Book, Settings2, Info } from 'lucide-react'
 import Image from 'next/image'
 
 export const Sidebar = () => {
+    const { setActiveComponent } = useActiveComponent()
   return (
     <aside className="inset-y fixed left-0 z-20 flex h-full flex-col border-r">
       <div className="border-b p-2">
@@ -20,7 +23,7 @@ export const Sidebar = () => {
           </Button>
       </div>
       <nav className="grid gap-1 p-2">
-        {/* Playground Button */}
+        {/* Shadow Analysis Button */}
         <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -28,13 +31,14 @@ export const Sidebar = () => {
               variant="ghost"
               size="icon"
               className="rounded-lg bg-muted"
-              aria-label="Playground"
+              aria-label="Shadow Analysis"
+              onClick={() => setActiveComponent('ShadowAnalysis')}
             >
-              <SquareTerminal className="size-5" />
+              <Sunset className="size-5" />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={5}>
-            Playground
+            Shadow Analysis
           </TooltipContent>
         </Tooltip>
         {/* Models Button */}
@@ -44,29 +48,14 @@ export const Sidebar = () => {
               variant="ghost"
               size="icon"
               className="rounded-lg"
-              aria-label="Models"
+              aria-label="Property details"
+              onClick={() => setActiveComponent('PropertyDetails')}
             >
-              <Bot className="size-5" />
+              <LandPlot className="size-5" />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={5}>
-            Models
-          </TooltipContent>
-        </Tooltip>
-        {/* API Button */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-lg"
-              aria-label="API"
-            >
-              <Code2 className="size-5" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="right" sideOffset={5}>
-            API
+            Property details
           </TooltipContent>
         </Tooltip>
         {/* Documentation Button */}
@@ -77,6 +66,7 @@ export const Sidebar = () => {
               size="icon"
               className="rounded-lg"
               aria-label="Documentation"
+              onClick={() => setActiveComponent('Documentation')}
             >
               <Book className="size-5" />
             </Button>
@@ -93,6 +83,7 @@ export const Sidebar = () => {
               size="icon"
               className="rounded-lg"
               aria-label="Settings"
+              onClick={() => setActiveComponent('Settings')}
             >
               <Settings2 className="size-5" />
             </Button>
@@ -113,28 +104,13 @@ export const Sidebar = () => {
               size="icon"
               className="mt-auto rounded-lg"
               aria-label="Help"
+              onClick={() => setActiveComponent('Help')}
             >
-              <LifeBuoy className="size-5" />
+              <Info className="size-5" />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={5}>
             Help
-          </TooltipContent>
-        </Tooltip>
-        {/* Account Button */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="mt-auto rounded-lg"
-              aria-label="Account"
-            >
-              <SquareUser className="size-5" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="right" sideOffset={5}>
-            Account
           </TooltipContent>
         </Tooltip>
         </TooltipProvider>

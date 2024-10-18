@@ -1,8 +1,27 @@
 "use client"
-
-import { useSearchParams } from "next/navigation"
+import React from 'react'
+import { useActiveComponent } from '@/hooks/useActiveComponent'
+import ShadowAnalysis from '@/components/pages/ShadowAnalysis'
+import PropertyDetails from '@/components/pages/PropertyDetails'
+import Documentation from '@/components/pages/Documentation'
+import Settings from '@/components/pages/Settings'
+import Help from '@/components/pages/Help'
+// import Account from '@/components/pages/Account'
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-export default function Workspace() {
+import { useSearchParams } from "next/navigation"
+
+const componentMap = {
+  ShadowAnalysis,
+  PropertyDetails,
+  Documentation,
+  Settings,
+  Help,
+}
+
+export const MainContent = () => {
+  const { activeComponent } = useActiveComponent()
+  const ActiveComponent = componentMap[activeComponent as keyof typeof componentMap]
+
   const searchParams = useSearchParams()
 
   const latitude = searchParams.get("latitude")
@@ -12,7 +31,10 @@ export default function Workspace() {
 
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <main className="flex-1 overflow-auto p-6">
+      {ActiveComponent ? <ActiveComponent /> : <div>Select a component from the sidebar</div>}
+
+      <div className="flex justify-center items-center min-h-screen">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-xl">Workspace</CardTitle>
@@ -35,5 +57,6 @@ export default function Workspace() {
         </CardContent>
       </Card>
     </div>
+    </main>
   )
 }

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Sidebar } from '@/components/workspace/Sidebar'
 import { Header } from '@/components/workspace/Header'
+import { MainContent } from '@/components/workspace/MainContent'
+
 
 export default function WorkspaceLayout({
   children,
@@ -12,7 +14,9 @@ export default function WorkspaceLayout({
       <Header />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        <main className="flex-1 overflow-auto p-6">{children}</main>
+        {/* <main className="flex-1 overflow-auto p-6">{children}</main> */}
+        <MainContent />
+
       </div>
     </div>
   )

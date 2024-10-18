@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -33,9 +34,9 @@ export const Header = () => {
   
 
   return (
-    <div className="flex flex-col absolute top-0 left-[60px] right-0">
+    <div className="flex flex-col absolute top-0 left-[56px] right-0">
      <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
-          <h1 className="text-xl font-semibold">Playground</h1>
+          <h1 className="text-xl font-semibold">Shadow Analysis</h1>
           <Drawer>
             <DrawerTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
