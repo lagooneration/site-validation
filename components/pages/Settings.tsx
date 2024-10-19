@@ -28,34 +28,34 @@ import { useSearchParams } from 'next/navigation'
 
 const invoices = [
   {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
+    invoice: "Chandigarh",
+    paymentStatus: "80%",
+    totalAmount: "₹2,50,000.00",
+    paymentMethod: "2,000",
   },
   {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
+    invoice: "Delhi",
+    paymentStatus: "60%",
+    totalAmount: "₹5,50,000.00",
+    paymentMethod: "4,500",
   },
   {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
+    invoice: "Jammu",
+    paymentStatus: "70%",
+    totalAmount: "₹15,50,000.00",
+    paymentMethod: "14,500",
   },
   {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
+    invoice: "Jalandhar",
+    paymentStatus: "75%",
+    totalAmount: "₹3,50,000.00",
+    paymentMethod: "1,500",
   },
   {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
+    invoice: "Haryana",
+    paymentStatus: "90%",
+    totalAmount: "₹8,50,000.00",
+    paymentMethod: "7,000",
   },
 ]
 
@@ -116,13 +116,13 @@ const Settings = () => {
             </CardFooter>
           </Card>
           <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableCaption>List of properties for site validation.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Property</TableHead>
               <TableHead>Shadow</TableHead>
               <TableHead>Units</TableHead>
-              <TableHead className="text-right">Savings</TableHead>
+              <TableHead className="text-right">Cost</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -138,7 +138,7 @@ const Settings = () => {
           <TableFooter>
             <TableRow>
               <TableCell colSpan={3}>Total</TableCell>
-              <TableCell className="text-right">$2,500.00</TableCell>
+              <TableCell className="text-right">₹30,50,000.00</TableCell>
             </TableRow>
           </TableFooter>
         </Table>

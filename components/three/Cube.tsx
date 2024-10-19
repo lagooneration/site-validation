@@ -14,7 +14,7 @@ const Cube: React.FC<MeshProps> = (props) => {
 
   return (
     <mesh ref={meshRef} {...props}>
-      <boxGeometry args={[1, 1, 1]} />
+      <boxGeometry args={[3, 3, 3]} />
       <meshStandardMaterial color="white" />
     </mesh>
   );

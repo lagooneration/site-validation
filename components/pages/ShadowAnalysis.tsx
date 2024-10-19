@@ -47,13 +47,7 @@ const searchParams = useSearchParams()
 
    return (
     <main className="grid flex-1 gap-4 overflow-hidden p-4 md:grid-cols-2 lg:grid-cols-3">
-      <Leva titleBar={{
-        title:'settings',
-          position: {
-            x: -45,
-            y: 90
-          }
-        }} />
+      
           <div
             className="relative hidden flex-col items-start gap-8 md:flex" x-chunk="dashboard-03-chunk-0"
           >
