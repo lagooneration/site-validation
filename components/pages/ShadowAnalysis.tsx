@@ -25,13 +25,14 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Day } from "../ui/day"
 import { Month } from "../ui/month"
-import { HourMonth } from "../hour-month"
+// import { HourMonth } from "../hour-month"
+import { DataCharts } from "../data-charts"
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
 import { Button } from "@/components/ui/button"
 // import { SunCanvas } from "@/components/sun-canvas"
 import { Badge } from "@/components/ui/badge"
 import Experience from "@/canvas/Experience"
-import { SliderProvider } from '../ui/SliderContext'
+// import { SliderProvider } from '../ui/SliderContext'
 import { Leva } from 'leva'
 
 
@@ -45,7 +46,7 @@ const searchParams = useSearchParams()
   const screenshot = searchParams.get("screenshot")
 
    return (
-    <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
+    <main className="grid flex-1 gap-4 overflow-hidden p-4 md:grid-cols-2 lg:grid-cols-3">
       <Leva titleBar={{
         title:'settings',
           position: {
@@ -57,30 +58,7 @@ const searchParams = useSearchParams()
             className="relative hidden flex-col items-start gap-8 md:flex" x-chunk="dashboard-03-chunk-0"
           >
             <form className="grid w-full items-start gap-6">
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
-                  {propertyName}
-                </legend>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="grid gap-3">
-                    <Label htmlFor="lat">Latitude</Label>
-                    <Input id="lat" type="number" placeholder={`${latitude}`} />
-                  </div>
-                  
-                  <div className="grid gap-3">
-                    <Label htmlFor="long">Longitude</Label>
-                    <Input id="long" type="number" placeholder={`${longitude}`}/>
-                  </div>
-                  </div>
-                  <div className="grid gap-3 w-1/2">
-                    <Day />     
-                    <Month />
-                  </div>
-              </fieldset>
-              <div className="grid gap-3">
-                  <HourMonth />
-                </div>
-              <fieldset className="grid gap-6 rounded-lg border p-4">
+            <fieldset className="grid gap-6 rounded-lg border p-4">
                 <legend className="-ml-1 px-1 text-sm font-medium">
                   Upload
                 </legend>
@@ -116,6 +94,29 @@ const searchParams = useSearchParams()
                 </TooltipProvider>
                 </div>
               </fieldset>
+              <fieldset className="grid gap-6 rounded-lg border p-4">
+                <legend className="-ml-1 px-1 text-sm font-medium">
+                  {propertyName}
+                </legend>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-3">
+                    <Label htmlFor="lat">Latitude</Label>
+                    <Input id="lat" type="number" placeholder={`${latitude}`} />
+                  </div>
+                  
+                  <div className="grid gap-3">
+                    <Label htmlFor="long">Longitude</Label>
+                    <Input id="long" type="number" placeholder={`${longitude}`}/>
+                  </div>
+                  </div>
+                  <div className="grid gap-3 w-1/2">
+                    <Day />     
+                    <Month />
+                  </div>
+              </fieldset>
+              <div className="grid gap-3">
+                  <DataCharts />
+                </div>
             </form>
           </div>
           <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">

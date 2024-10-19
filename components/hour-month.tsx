@@ -38,11 +38,11 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: "Sunlight",
-    color: "hsl(var(--chart-1))",
+    color: "hsl(24, 100%, 59%)",
   },
   mobile: {
     label: "Units",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig
 
@@ -52,7 +52,13 @@ export function HourMonth() {
       <CardHeader>
         <CardTitle>Sunlight Coverage</CardTitle>
         <CardDescription>
-          Yearly sunlight hours 
+        <div className="flex w-full items-start gap-2 text-sm">
+          <div className="grid gap-2">
+            <div className="flex items-center gap-2 font-medium leading-none">
+              4.2 units per day <TrendingUp className="h-4 w-4" />
+            </div>
+          </div>
+        </div>
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -119,18 +125,6 @@ export function HourMonth() {
           </AreaChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              4.2 units per day <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              January - December 2023
-            </div>
-          </div>
-        </div>
-      </CardFooter>
     </Card>
   )
 }
