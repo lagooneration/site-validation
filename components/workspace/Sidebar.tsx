@@ -8,6 +8,9 @@ import Image from 'next/image'
 
 export const Sidebar = () => {
     const { setActiveComponent, activeComponent } = useActiveComponent()
+    React.useEffect(() => {
+        setActiveComponent('ShadowAnalysis');
+    }, [setActiveComponent]);
   return (
     <aside className="inset-y fixed left-0 z-20 flex h-full flex-col border-r">
       <div className="border-b p-2">
@@ -18,7 +21,7 @@ export const Sidebar = () => {
               width={24}
               height={24}
               priority
-              onClick={() => setActiveComponent('MainContent')}
+              onClick={() => setActiveComponent('Dashboard')}
             />
 
           </Button>

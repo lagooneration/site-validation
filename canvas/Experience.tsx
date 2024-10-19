@@ -1,12 +1,11 @@
-// canvas/Experience.tsx
+// import { Leva } from 'leva';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 // import Lights from '@/components/three/Lights';
 import Atmosphere from '@/components/three/Atmosphere';
-// import { Leva } from 'leva';
 // import Cube from '@/components/three/Cube';
-import Land from '@/components/three/Land';
-import Earth from '@/components/three/Earth';
+// import Land from '@/components/three/Land';
+// import Sphere from '@/components/three/Sphere';
 import SunPath from '@/components/three/Sunpath';
 import SunSimulation from '@/components/sun-simulation'
 
@@ -21,10 +20,10 @@ const Experience = () => {
       {/* <Plane rotation={[-Math.PI / 2, 0, 0]} /> */}
       <ambientLight intensity={0.2}/>
       <SunPath />
-      <Earth />
+      {/* <Earth /> */}
       <Atmosphere />
       <SunSimulation />
-      <Land texturePath="/assets/location1.png" position={[0, 0.5, -0.5]} rotation={[-Math.PI / 2, 0, 0]} castShadow/>
+      {/* <Land texturePath="/assets/location1.png" position={[0, 0.5, -0.5]} rotation={[-Math.PI / 2, 0, 0]} castShadow/> */}
       <OrbitControls />
     </Canvas>
   );

@@ -1,74 +1,41 @@
-"use client"
-import React from 'react'
-import { useActiveComponent } from '@/hooks/useActiveComponent'
-import ShadowAnalysis from '@/components/pages/ShadowAnalysis'
-import PropertyDetails from '@/components/pages/PropertyDetails'
-import Documentation from '@/components/pages/Documentation'
-import Settings from '@/components/pages/Settings'
-import Help from '@/components/pages/Help'
-// import Account from '@/components/pages/Account'
-// import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-// import { useSearchParams } from "next/navigation"
-
+import React from 'react';
 import {
-  Area,
-  AreaChart,
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Label,
-  LabelList,
-  Line,
-  LineChart,
-  PolarAngleAxis,
-  RadialBar,
-  RadialBarChart,
-  Rectangle,
-  ReferenceLine,
-  XAxis,
-  YAxis,
-} from "recharts"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-import { Separator } from "@/components/ui/separator"
-import { SliderProvider } from '@/components/ui/SliderContext'
+    Area,
+    AreaChart,
+    Bar,
+    BarChart,
+    CartesianGrid,
+    Label,
+    LabelList,
+    Line,
+    LineChart,
+    PolarAngleAxis,
+    RadialBar,
+    RadialBarChart,
+    Rectangle,
+    ReferenceLine,
+    XAxis,
+    YAxis,
+  } from "recharts"
+  import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+  } from "@/components/ui/card"
+  import {
+    ChartContainer,
+    ChartTooltip,
+    ChartTooltipContent,
+  } from "@/components/ui/chart"
+  import { Separator } from "@/components/ui/separator"
 
-const componentMap = {
-  ShadowAnalysis,
-  PropertyDetails,
-  Documentation,
-  Settings,
-  Help,
-}
-
-export const MainContent = () => {
-  const { activeComponent } = useActiveComponent()
-  const ActiveComponent = componentMap[activeComponent as keyof typeof componentMap]
-
-  // const searchParams = useSearchParams()
-
-  // const latitude = searchParams.get("latitude")
-  // const longitude = searchParams.get("longitude")
-  // const propertyName = searchParams.get("propertyName")
-  // const screenshot = searchParams.get("screenshot")
-
-
+  
+const Home = () => {
   return (
-    <main className="flex-1 overflow-auto p-6 mt-12 ml-14">
-      <SliderProvider>
-      {ActiveComponent ? <ActiveComponent /> : 
-      <div className="chart-wrapper mx-auto flex max-w-6xl flex-col flex-wrap items-start justify-center gap-6 p-6 sm:flex-row sm:p-8">
+    <div className="chart-wrapper mx-auto flex max-w-6xl flex-col flex-wrap items-start justify-center gap-6 p-6 sm:flex-row sm:p-8">
       <div className="grid w-full gap-6 sm:grid-cols-2 lg:max-w-[22rem] lg:grid-cols-1 xl:max-w-[25rem]">
         <Card
           className="lg:max-w-md" x-chunk="charts-01-chunk-0"
@@ -327,7 +294,7 @@ export const MainContent = () => {
           <CardHeader>
             <CardTitle>Progress</CardTitle>
             <CardDescription>
-              You're average more steps a day this year than last year.
+              You&apos;re average more steps a day this year than last year.
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
@@ -724,7 +691,7 @@ export const MainContent = () => {
           <CardHeader className="p-4 pb-0">
             <CardTitle>Active Energy</CardTitle>
             <CardDescription>
-              You're burning an average of 754 calories per day. Good job!
+              You&apos;re burning an average of 754 calories per day. Good job!
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-row items-baseline gap-4 p-4 pt-2">
@@ -908,10 +875,8 @@ export const MainContent = () => {
           </CardContent>
         </Card>
       </div>
-    </div>}
+    </div>
+  );
+};
 
-      
-    </SliderProvider>
-    </main>
-  )
-}
+export default Home;

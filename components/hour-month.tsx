@@ -21,18 +21,18 @@ import {
 export const description = "An area chart with gradient fill"
 
 const chartData = [
-  { month: "January", sunlight: 186, units: 80 },
-  { month: "February", sunlight: 305, units: 200 },
-  { month: "March", sunlight: 237, units: 120 },
-  { month: "April", sunlight: 73, units: 190 },
-  { month: "May", sunlight: 209, units: 130 },
-  { month: "June", sunlight: 214, units: 140 },
-  { month: "July", sunlight: 214, units: 140 },
-  { month: "August", sunlight: 214, units: 140 },
-  { month: "September", sunlight: 214, units: 140 },
-  { month: "October", sunlight: 214, units: 140 },
-  { month: "November", sunlight: 214, units: 140 },
-  { month: "December", sunlight: 214, units: 140 },
+  { month: "January", sunlight: 266, units: 99 },
+  { month: "February", sunlight: 275, units: 115 },
+  { month: "March", sunlight: 278, units: 120 },
+  { month: "April", sunlight: 287, units: 127 },
+  { month: "May", sunlight: 299, units: 132 },
+  { month: "June", sunlight: 314, units: 140 },
+  { month: "July", sunlight: 316, units: 141 },
+  { month: "August", sunlight: 311, units: 136 },
+  { month: "September", sunlight: 294, units: 122 },
+  { month: "October", sunlight: 284, units: 110 },
+  { month: "November", sunlight: 272, units: 101 },
+  { month: "December", sunlight: 254, units: 96 },
 ]
 
 const chartConfig = {

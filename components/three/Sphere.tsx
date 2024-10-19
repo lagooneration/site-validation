@@ -3,7 +3,7 @@ import { MeshProps, useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import { Mesh } from 'three';
 
-const Earth = () => {
+const Sphere = () => {
  
 
   return (
@@ -14,4 +14,4 @@ const Earth = () => {
   );
 };
 
-export default Earth;
+export default Sphere;
