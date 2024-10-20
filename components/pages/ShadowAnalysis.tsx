@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
@@ -36,22 +36,29 @@ import Experience from "@/canvas/Experience"
 import { Leva } from 'leva'
 
 
-const ShadowAnalysis = () => {
+const ShadowAnalysis: React.FC = () => {
 
 const searchParams = useSearchParams()
 
   const latitude = searchParams.get("latitude")
   const longitude = searchParams.get("longitude")
   const propertyName = searchParams.get("propertyName")
-  const screenshot = searchParams.get("screenshot")
+  // const screenshot = searchParams.get("screenshot")
+
+  // State to hold the uploaded image
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null)
+
+  // Handle file upload
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      setUploadedImage(file)
+    }
+  }
 
    return (
     <main className="grid flex-1 gap-4 overflow-hidden p-4 md:grid-cols-2 lg:grid-cols-3">
-        <Leva 
-          titleBar={{ title: "Shadow Analysis",
-            position: { x: -42, y: 95 },
-           }} 
-        />
+        <Leva titleBar={{ title: "Shadow Analysis", position: { x: -42, y: 95 } }} />
           <div
             className="relative hidden flex-col items-start gap-8 md:flex" x-chunk="dashboard-03-chunk-0"
           >
@@ -65,6 +72,7 @@ const searchParams = useSearchParams()
                 <Tooltip>
                         <TooltipTrigger asChild>
                             <Button variant="ghost" size="icon">
+                                <input type="file" accept="image/*" onChange={handleFileChange} /> 
                                 <LandPlot  className="size-5" />
                                 <span className="sr-only">Location screenshot</span>
                             </Button>
@@ -119,7 +127,7 @@ const searchParams = useSearchParams()
           </div>
           <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
             <div className="w-[1088px] h-[800px]">
-                <Experience />
+                <Experience uploadedImage={uploadedImage} />
             </div>
             <Badge variant="outline" className="absolute left-6 top-6">
               Output

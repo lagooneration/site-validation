@@ -1,6 +1,6 @@
 "use client"
 
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 export default function Workspace() {
   const searchParams = useSearchParams()
@@ -8,8 +8,9 @@ export default function Workspace() {
   const latitude = searchParams.get("latitude")
   const longitude = searchParams.get("longitude")
   const propertyName = searchParams.get("propertyName")
-  const screenshot = searchParams.get("screenshot")
-
+//   const screenshot = searchParams.get("screenshot")
+// const router = useRouter();
+//   const { latitude, longitude, propertyName } = router.query;
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -28,9 +29,9 @@ export default function Workspace() {
             <div>
               <strong>Property Name:</strong> {propertyName}
             </div>
-            <div>
+            {/* <div>
               <strong>Screenshot:</strong> {screenshot}
-            </div>
+            </div> */}
           </div>
         </CardContent>
       </Card>

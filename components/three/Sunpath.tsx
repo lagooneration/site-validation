@@ -7,14 +7,19 @@ import { calculateSunPathPoints } from '@/lib/sunPathUtils';
 
 const SunPath = () => {
   // Leva controls for interactive inputs
-  const { latitude, month, day } = useControls({
+  const { latitude, dayOfYear } = useControls({
     latitude: { value: 37.7749, min: -90, max: 90, step: 0.1 },
-    month: { value: 6, min: 1, max: 12, step: 1 },
-    day: { value: 15, min: 1, max: 31, step: 1 },
+    dayOfYear: { value: 1, min: 1, max: 365, step: 1 },
   });
 
-  // Calculate the day of the year from month and day
-  const dayOfYear = useMemo(() => Math.floor((month - 1) * 30.42 + day), [month, day]);
+  // Calculate the month and day from the day of the year
+  const month = useMemo(() => {
+    return Math.ceil(dayOfYear / 30.42);
+  }, [dayOfYear]);
+
+  const day = useMemo(() => {
+    return dayOfYear - Math.floor((month - 1) * 30.42);
+  }, [month, dayOfYear]);
 
   // Calculate the sun path points
   const sunPathPoints = useMemo(() => {
@@ -23,7 +28,7 @@ const SunPath = () => {
   }, [latitude, dayOfYear]);
 
   return (
-    <group>
+    <group scale={[12,12,12]}>
       {/* Dashed line to visualize the sun path */}
       <Line
         points={sunPathPoints} // Array of Vector3 points

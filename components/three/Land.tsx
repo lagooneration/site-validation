@@ -20,7 +20,7 @@ const Land: React.FC<PlaneWithTextureProps> = ({ texturePath, ...props }) => {
   return (
     <mesh ref={meshRef} {...props}>
       {/* PlaneGeometry: width = 5, height = 5 */}
-      <planeGeometry args={[10, 10]} />
+      <planeGeometry args={[20, 20]} />
       {/* Material with the loaded texture */}
       <meshBasicMaterial map={texture} />
     </mesh>
