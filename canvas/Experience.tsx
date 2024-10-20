@@ -5,7 +5,7 @@ import { OrbitControls } from '@react-three/drei';
 import Atmosphere from '@/components/three/Atmosphere';
 // import Cube from '@/components/three/Cube';
 // import Land from '@/components/three/Land';
-// import Sphere from '@/components/three/Sphere';
+import Earth from '@/components/three/Earth';
 import SunPath from '@/components/three/Sunpath';
 import SunSimulation from '@/components/sun-simulation'
 
@@ -20,7 +20,7 @@ const Experience = () => {
       {/* <Plane rotation={[-Math.PI / 2, 0, 0]} /> */}
       <ambientLight intensity={0.2}/>
       <SunPath />
-      {/* <Earth /> */}
+      <Earth />
       <Atmosphere />
       <SunSimulation />
       {/* <Land texturePath="/assets/location1.png" position={[0, 0.5, -0.5]} rotation={[-Math.PI / 2, 0, 0]} castShadow/> */}
