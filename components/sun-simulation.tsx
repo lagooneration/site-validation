@@ -1,10 +1,10 @@
 "use client"
 // SunSimulation.tsx
-import { useMemo, useRef, RefObject, useEffect } from 'react';
-import { Vector3, Color, BufferGeometry, BufferAttribute, MathUtils, OrthographicCamera, CameraHelper } from 'three';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useMemo, useRef, useEffect } from 'react';
+import { Vector3, Color, BufferGeometry, BufferAttribute, MathUtils, OrthographicCamera } from 'three';
+import { useFrame } from '@react-three/fiber';
 import { useControls } from 'leva';
-import { Sphere, Billboard, Ring, Plane, Line, useHelper } from '@react-three/drei';
+import { Sphere, Billboard, Ring, Plane, Line } from '@react-three/drei';
 import { DateTime } from 'luxon';
 import tzLookup from 'tz-lookup';
 import { getPosition } from 'suncalc';
@@ -36,8 +36,8 @@ function getSunColor(y: number) {
 
 
 export const SunSimulation = () => {
-  const { timeOfDay, month, longitude, latitude } = useControls({
-    timeOfDay: { value: 12, min: 0, max: 23, step: 0.1 },
+  const { time, month, longitude, latitude } = useControls({
+    time: { value: 12, min: 0, max: 23, step: 0.1 },
     month: { value: 6, min: 1, max: 12, step: 0.1 },
     longitude: { value: 0, min: -179, max: 180, step: 0.1 },
     latitude: { value: 51, min: -80, max: 80, step: 0.1 },
@@ -45,13 +45,13 @@ export const SunSimulation = () => {
     // cameraScale: { value: 0.2, min: 0.1, max: 2_000_000 },
   });
 
-  // const { position, sunPath } = useSun({ latitude, longitude, month, timeOfDay });
+  // const { position, sunPath } = useSun({ latitude, longitude, month, time });
 
   // function Sun({ latitude, longitude }: { longitude: number, latitude: number }) {
 
-    // const { position, sunPath } = useSun({ latitude, longitude, month, timeOfDay });
+    // const { position, sunPath } = useSun({ latitude, longitude, month, time });
   
-    const { position, sunPath } = useSun({ latitude, longitude, month, timeOfDay });
+    const { position, sunPath } = useSun({ latitude, longitude, month, time });
   
     const { showSunRay, cameraScale } = useControls({
       showSunRay: false,
@@ -169,18 +169,18 @@ function Floor() {
 
 
 
-function useSun({ latitude, longitude, month, timeOfDay }: { longitude: number, latitude: number, month: number, timeOfDay: number }) {
+function useSun({ latitude, longitude, month, time }: { longitude: number, latitude: number, month: number, time: number }) {
   const date = useMemo(() => {
     const timeZone = tzLookup(latitude, longitude);
     return DateTime.now().setZone(timeZone).set({
       month: Math.floor(month),
       day: Math.floor((month % 1) * 27) + 1,
-      hour: Math.floor(timeOfDay),
-      minute: (timeOfDay % 1) * 60,
+      hour: Math.floor(time),
+      minute: (time % 1) * 60,
       second: 0,
       millisecond: 0,
     }).toJSDate();
-  }, [latitude, longitude, month, timeOfDay]);
+  }, [latitude, longitude, month, time]);
 
   const { position, sunPath } = useMemo(() => {
     const position = getSunPosition({ date, latitude, longitude });

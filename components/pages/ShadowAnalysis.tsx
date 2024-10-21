@@ -1,25 +1,12 @@
 'use client'
 import React, { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+// import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
 import {
   Box,
-  Book,
-  Bot,
-  Copy,
   SquareArrowOutDownLeft,
-  LandPlot,
-  Moon,
-  ImageUp,
-  Settings,
-  Settings2,
-  Share,
-  Sun,
-  Bell,
-  Info,
   Paperclip,
-  MoveLeft,
 } from "lucide-react"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -55,6 +42,7 @@ const searchParams = useSearchParams()
       setUploadedImage(file)
     }
   }
+
 
    return (
     <main className="grid flex-1 gap-4 overflow-hidden p-4 md:grid-cols-2 lg:grid-cols-3">
@@ -95,7 +83,6 @@ const searchParams = useSearchParams()
                   </div>
                   <div className="grid gap-3 w-1/2">
                     <Day />     
-                    <Month />
                   </div>
               </fieldset>
               <div className="grid gap-3">
