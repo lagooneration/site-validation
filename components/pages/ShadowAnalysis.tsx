@@ -46,26 +46,11 @@ const searchParams = useSearchParams()
 
    return (
     <main className="grid flex-1 gap-4 overflow-hidden p-4 md:grid-cols-2 lg:grid-cols-3">
-        <Leva collapsed={true} titleBar={{ title: "Shadow Analysis", position: { x: -42, y: 95 } }} />
+        <Leva collapsed={true} titleBar={{ title: "Shadow Analysis", position: { x: -55, y: 100 } }} />
           <div
             className="relative hidden flex-col items-start gap-8 md:flex" x-chunk="dashboard-03-chunk-0"
           >
             <form className="grid w-full items-start gap-6">
-            <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
-                  Upload
-                </legend>
-                <div className="flex flex-row gap-4">
-                <TooltipProvider>
-                <Tooltip>
-                        <TooltipTrigger asChild>
-                                <input type="file" accept="image/*" onChange={handleFileChange} /> 
-                        </TooltipTrigger>
-                        <TooltipContent side="top">Location screenshot</TooltipContent>
-                </Tooltip>
-                </TooltipProvider>
-                </div>
-              </fieldset>
               <fieldset className="grid gap-6 rounded-lg border p-4">
                 <legend className="-ml-1 px-1 text-sm font-medium">
                   {propertyName}
@@ -91,7 +76,7 @@ const searchParams = useSearchParams()
             </form>
           </div>
           <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
-            <div className="w-[1088px] h-[800px]">
+            <div className="w-[1112px] h-[800px]">
                 <Experience uploadedImage={uploadedImage} />
             </div>
             <Badge variant="outline" className="absolute left-6 top-6">
@@ -101,14 +86,19 @@ const searchParams = useSearchParams()
             <form
               className="relative overflow-hidden rounded-lg border bg-muted focus-within:ring-1 focus-within:ring-ring" x-chunk="dashboard-03-chunk-1"
             >
+                
               <div className="flex items-center p-3 pt-0 mt-3 gap-2"> 
-                <Button>
-                  <Paperclip className="size-3.5" />
-                  </Button>  
-                  <Button>
-                  <Box className="size-3.5" />
-                  </Button>  
-                <Button  type="button" size="sm" className="ml-auto gap-1.5">
+              <div className="flex flex-row gap-4">
+                <TooltipProvider>
+                <Tooltip>
+                        <TooltipTrigger asChild>
+                                <input type="file" accept="image/*" onChange={handleFileChange} /> 
+                        </TooltipTrigger>
+                        <TooltipContent side="top">Location screenshot</TooltipContent>
+                </Tooltip>
+                </TooltipProvider>
+                </div>
+                <Button variant="destructive" type="button" size="sm" className="ml-auto gap-1.5">
                   Reset
                   <SquareArrowOutDownLeft className="size-3.5" />
                 </Button>

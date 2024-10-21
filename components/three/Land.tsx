@@ -18,7 +18,7 @@ const Land: React.FC<PlaneWithTextureProps> = ({ texturePath, ...props }) => {
   const meshRef = useRef<Mesh>(null!); // Ref for accessing the mesh if needed
 
   return (
-    <mesh ref={meshRef} {...props}>
+    <mesh ref={meshRef} {...props} receiveShadow>
       {/* PlaneGeometry: width = 5, height = 5 */}
       <planeGeometry args={[20, 20]} />
       {/* Material with the loaded texture */}

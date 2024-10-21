@@ -13,7 +13,7 @@ const Cube: React.FC<MeshProps> = (props) => {
   });
 
   return (
-    <mesh ref={meshRef} {...props}>
+    <mesh ref={meshRef} {...props} castShadow>
       <boxGeometry args={[3, 3, 3]} />
       <meshStandardMaterial color="white" />
     </mesh>

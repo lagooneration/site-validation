@@ -12,7 +12,7 @@ import { Sky } from '@react-three/drei';
 // import { Line } from 'three';
 import { Line2 } from 'three/examples/jsm/lines/Line2.js';
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js';
-
+// import Cube from '@/components/three/Cube';
 
 
 
@@ -41,6 +41,7 @@ export const SunSimulation = () => {
     month: { value: 6, min: 1, max: 12, step: 0.1 },
     longitude: { value: 0, min: -179, max: 180, step: 0.1 },
     latitude: { value: 51, min: -80, max: 80, step: 0.1 },
+    // cube: { value: false, label: 'Cube' },
     // showCamHelper: false,
     // cameraScale: { value: 0.2, min: 0.1, max: 2_000_000 },
   });
@@ -86,6 +87,7 @@ export const SunSimulation = () => {
       <>
         <ambientLight intensity={0.1} />
         <SunPath path={sunPath} />
+        {/* {cube && <Cube />} */}
         <Analemma latitude={latitude} longitude={longitude} />
         {showSunRay && (
           <Line

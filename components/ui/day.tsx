@@ -13,8 +13,18 @@ const formatTime = (hours: number, minutes: number) => {
 export function Day() {
   const { value, setValue } = useSlider();
   const [showTooltip, setShowTooltip] = useState(false);
-  const hours = Math.floor(value / 60);
-  const minutes = value % 60;
+  const defaultValue = 12 * 60; // 12 hours in minutes
+  const [currentValue, setCurrentValue] = useState(defaultValue);
+  const hours = Math.floor(currentValue / 60);
+  const minutes = currentValue % 60;
+
+  React.useEffect(() => {
+    setValue(defaultValue);
+  }, []);
+
+  React.useEffect(() => {
+    setCurrentValue(value);
+  }, [value]);
 
 
   const handleValueChange = (newValue: number[]) => {
@@ -29,7 +39,7 @@ export function Day() {
 
   return (
     <div className="grid gap-3">
-      <Label htmlFor="daytime">Time: <span className="text-blue-500">{formatTime(hours, minutes)}</span></Label>
+      <Label htmlFor="daytime">Time: <span className={isDaytime(value) ? "text-yellow-500" : "text-blue-500"}>{formatTime(hours, minutes)}</span></Label>
       <div className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
         <TooltipProvider>
           <Tooltip open={showTooltip}>

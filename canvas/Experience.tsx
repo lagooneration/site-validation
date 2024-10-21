@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Grid, Text } from '@react-three/drei';
 import Land from '@/components/three/Land';
 import Earth from '@/components/three/Earth';
+// import Cube from '@/components/three/Cube';
 // import SunPath from '@/components/three/Sunpath';
 import { SunSimulation } from '@/components/sun-simulation';
 import { useControls } from 'leva';
@@ -13,9 +14,11 @@ import { Vector3 } from 'three';
 const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage }) => {
     const texturePath = uploadedImage ? URL.createObjectURL(uploadedImage) : null;
     
-    const { showGrid, showCompass } = useControls({
+    const { showGrid, showCompass, showEarth } = useControls({
         showGrid: { value: true, label: 'Grid' },
-        showCompass: { value: false, label: 'Compass' }
+        showCompass: { value: false, label: 'Compass' },
+        showEarth: { value: true, label: 'Earth' },
+        // showCube: { value: false, label: 'Cube' }
     });
 
     const compassDirections = useMemo(() => {
@@ -30,16 +33,19 @@ const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage })
 
     return (
         <>
-            <Canvas camera={{ position: [1.5, 3, 3], fov: 75, near: 0.1, far: 1000 }}>
+            <Canvas camera={{ position: [3, 9, 9], fov: 75, near: 0.1, far: 1000 }}>
                 <ambientLight intensity={0.2}/>
                 {/* <SunPath /> */}
-                <Earth />
+                {showEarth && <Earth />}
+                {/* {showCube && <Cube />} */}
                 {showCompass && compassDirections.map(({ label, position }) => (
                 <Text
                     key={label}
                     position={position}
                     rotation={[-Math.PI / 2, 0, 0]}
-                    color="white"
+                    strokeWidth={0.08}
+                    strokeColor="black"
+                    color={label === 'N' ? 'red' : 'white'}
                     fontSize={3}
                     anchorX="center"
                     anchorY="middle"
@@ -48,7 +54,7 @@ const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage })
                 </Text>
                 ))}
                 {texturePath && (
-                    <Land texturePath={texturePath} position={[0, 0.5, -0.5]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow/>
+                    <Land texturePath={texturePath} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} />
                 )}
                 {showGrid && <Grid args={[100, 100]} position={[0, -0.5, 0]} />}
                 <SunSimulation />

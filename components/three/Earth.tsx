@@ -19,7 +19,7 @@ const Earth: React.FC = () => {
 
   return (
     <mesh rotation={[0, Math.PI / 2, 0]}>
-      <sphereGeometry args={[4, 64, 64]} />
+      <sphereGeometry args={[32, 64, 64]} />
       <meshStandardMaterial 
       displacementScale={0.2}
       map={colorMap}
