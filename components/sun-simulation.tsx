@@ -1,14 +1,20 @@
 "use client"
 // SunSimulation.tsx
-import { useMemo, useRef, useEffect } from 'react';
+import { useMemo, useRef, RefObject, useEffect } from 'react';
 import { Vector3, Color, BufferGeometry, BufferAttribute, MathUtils, OrthographicCamera, CameraHelper } from 'three';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { useControls } from 'leva';
 import { Sphere, Billboard, Ring, Plane, Line, useHelper } from '@react-three/drei';
 import { DateTime } from 'luxon';
 import tzLookup from 'tz-lookup';
 import { getPosition } from 'suncalc';
-import { MutableRefObject } from 'react';
+import { Sky } from '@react-three/drei';
+// import { Line } from 'three';
+import { Line2 } from 'three/examples/jsm/lines/Line2.js';
+import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js';
+
+
+
 
 
 const RADIUS = 50;
@@ -30,71 +36,105 @@ function getSunColor(y: number) {
 
 
 export const SunSimulation = () => {
-  const { timeOfDay, month, longitude, latitude, showCamHelper, cameraScale } = useControls({
+  const { timeOfDay, month, longitude, latitude } = useControls({
     timeOfDay: { value: 12, min: 0, max: 23, step: 0.1 },
     month: { value: 6, min: 1, max: 12, step: 0.1 },
     longitude: { value: 0, min: -179, max: 180, step: 0.1 },
     latitude: { value: 51, min: -80, max: 80, step: 0.1 },
-    showCamHelper: false,
-    cameraScale: { value: 0.2, min: 0.1, max: 2_000_000 },
+    // showCamHelper: false,
+    // cameraScale: { value: 0.2, min: 0.1, max: 2_000_000 },
   });
 
-  const { position, sunPath } = useSun({ latitude, longitude, month, timeOfDay });
+  // const { position, sunPath } = useSun({ latitude, longitude, month, timeOfDay });
 
-  const camera = useRef<OrthographicCamera>(null);
+  // function Sun({ latitude, longitude }: { longitude: number, latitude: number }) {
 
-  useFrame(() => {
-    if (!camera.current) return;
-    camera.current.left = -cameraScale;
-    camera.current.right = cameraScale;
-    camera.current.top = -cameraScale;
-    camera.current.bottom = cameraScale;
-  });
+    // const { position, sunPath } = useSun({ latitude, longitude, month, timeOfDay });
+  
+    const { position, sunPath } = useSun({ latitude, longitude, month, timeOfDay });
+  
+    const { showSunRay, cameraScale } = useControls({
+      showSunRay: false,
+      cameraScale: {
+        value: 0.2,
+        min: 0.1,
+        max: 2_000_000,
+      }
+    });
+  
+    const camera = useRef<OrthographicCamera>(null);
 
-  return (
-    <>
-      <ambientLight intensity={0.1} />
-      <SunPath path={sunPath} />
-      <Analemma latitude={latitude} longitude={longitude} />
-      {showCamHelper && <CamHelper camera={camera} />}
-      <directionalLight
-        name="SunLight"
-        castShadow
-        position={position}
-        intensity={position.y >= 0 ? 1.5 * Math.PI : 0}
-        shadow-mapSize={1024}
-      >
-        <Sphere args={[2]} material-color="orange" visible={position.y >= 0} />
-        <Billboard visible={position.y < 0}>
-          <Ring args={[3, 4]} material-color="orange" />
-        </Billboard>
-        <orthographicCamera
-          ref={camera}
-          attach="shadow-camera"
-          left={-cameraScale}
-          right={cameraScale}
-          top={-cameraScale}
-          bottom={cameraScale}
-          near={0.1}
-          far={100_000_000}
+    useFrame(() => {
+      if (!camera.current) return;
+      camera.current.left = -cameraScale;
+      camera.current.right = cameraScale;
+      camera.current.top = -cameraScale;
+      camera.current.bottom = cameraScale;
+    });
+
+    const sunRayRef = useRef<Line2 | LineSegments2>(null);
+
+    useEffect(() => {
+      if (sunRayRef.current) {
+        const start = position;
+        const end = new Vector3(0, 0, 0);
+        sunRayRef.current.geometry.setFromPoints([start, end]);
+      }
+    }, [position]);
+
+    return (
+      <>
+        <ambientLight intensity={0.1} />
+        <SunPath path={sunPath} />
+        <Analemma latitude={latitude} longitude={longitude} />
+        {showSunRay && (
+          <Line
+            ref={sunRayRef as React.Ref<Line2 | LineSegments2>}
+            points={[position, new Vector3(0, 0, 0)]}
+            color="yellow"
+            lineWidth={1}
+          />
+        )}
+        <directionalLight
+          name="SunLight"
+          castShadow
+          position={position}
+          intensity={position.y >= 0 ? 1.5 * Math.PI : 0}
+          shadow-mapSize={1024}
+        >
+          <Sky 
+            sunPosition={position}
+            mieCoefficient={0.1}
+            mieDirectionalG={0.9999}
+            rayleigh={0.199}
+          />
+          <Sphere args={[2]} material-color="orange" visible={position.y >= 0} />
+          <Billboard visible={position.y < 0}>
+            <Ring args={[3, 4]} material-color="orange" />
+          </Billboard>
+          <orthographicCamera
+            ref={camera}
+            attach="shadow-camera"
+            left={-cameraScale}
+            right={cameraScale}
+            top={-cameraScale}
+            bottom={cameraScale}
+            near={0.1}
+            far={100_000_000}
+          />
+        </directionalLight>
+        <hemisphereLight
+          args={["#343838", "#005f6b"]}
+          position={position}
+          visible={position.y < 0}
+          intensity={Math.PI}
         />
-      </directionalLight>
-      <hemisphereLight
-        args={["#343838", "#005f6b"]}
-        position={position}
-        visible={position.y < 0}
-        intensity={Math.PI}
-      />
-      <Floor />
-    </>
-  );
-};
+        <Floor />
+      </>
+    );
+  };
 
-
-function CamHelper({ camera }: { camera: React.RefObject<OrthographicCamera> }) {
-  useHelper(camera as MutableRefObject<OrthographicCamera>, CameraHelper);
-  return null;
-}
+// Removed CamHelper function as it's no longer needed
 
 function SunPath({ path }: { path: Vector3[] }) {
   const geometry = useMemo(() => {
@@ -113,6 +153,7 @@ function SunPath({ path }: { path: Vector3[] }) {
   );
 }
 
+
 function Floor() {
   return (
     <Plane
@@ -125,6 +166,8 @@ function Floor() {
     </Plane>
   );
 }
+
+
 
 function useSun({ latitude, longitude, month, timeOfDay }: { longitude: number, latitude: number, month: number, timeOfDay: number }) {
   const date = useMemo(() => {

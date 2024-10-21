@@ -14,12 +14,12 @@ const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage })
     const texturePath = uploadedImage ? URL.createObjectURL(uploadedImage) : null;
     
     const { showGrid, showCompass } = useControls({
-        showGrid: { value: false, label: 'Grid' },
+        showGrid: { value: true, label: 'Grid' },
         showCompass: { value: false, label: 'Compass' }
     });
 
     const compassDirections = useMemo(() => {
-        const radius = 1.2;
+        const radius = 12.0;
         return [
           { label: 'N', position: new Vector3(0, 0, -radius) },
           { label: 'S', position: new Vector3(0, 0, radius) },
@@ -34,14 +34,13 @@ const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage })
                 <ambientLight intensity={0.2}/>
                 {/* <SunPath /> */}
                 <Earth />
-                <SunSimulation />
                 {showCompass && compassDirections.map(({ label, position }) => (
                 <Text
                     key={label}
                     position={position}
                     rotation={[-Math.PI / 2, 0, 0]}
                     color="white"
-                    fontSize={0.2}
+                    fontSize={3}
                     anchorX="center"
                     anchorY="middle"
                 >
@@ -51,7 +50,8 @@ const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage })
                 {texturePath && (
                     <Land texturePath={texturePath} position={[0, 0.5, -0.5]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow/>
                 )}
-                {showGrid && <Grid args={[100, 100]} />}
+                {showGrid && <Grid args={[100, 100]} position={[0, -0.5, 0]} />}
+                <SunSimulation />
                 <OrbitControls />
             </Canvas>
         </>

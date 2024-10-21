@@ -59,7 +59,7 @@ export default function Header() {
                   <legend className="-ml-1 px-1 text-sm font-medium">
                     Settings
                   </legend>
-                  <div className="grid gap-3">
+                  {/* <div className="grid gap-3">
                     <Label htmlFor="model">Model</Label>
                     <Select>
                       <SelectTrigger
@@ -120,7 +120,7 @@ export default function Header() {
                         </SelectItem>
                       </SelectContent>
                     </Select>
-                  </div>
+                  </div> */}
                   <div className="grid gap-3">
                     <Label htmlFor="temperature">Temperature</Label>
                     <Input id="temperature" type="number" placeholder="0.4" />
