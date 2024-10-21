@@ -1,13 +1,14 @@
 import { useMemo } from 'react';
-import { Line } from '@react-three/drei';
+import { Line, Text } from '@react-three/drei';
 import { Vector3 } from 'three';
 import { useControls } from 'leva';
 import { calculateSunPathPoints } from '@/lib/sunPathUtils';
 
 const SunPath = () => {
-  const { latitude, dayOfYear } = useControls({
+  const { latitude, dayOfYear, showCompass } = useControls({
     latitude: { value: 37.7749, min: -90, max: 90, step: 0.1 },
     dayOfYear: { value: 1, min: 1, max: 365, step: 1 },
+    showCompass: { value: false, label: 'Show Compass' },
   });
 
   const month = useMemo(() => {
@@ -36,6 +37,16 @@ const SunPath = () => {
     const latInRadians = (latitude * Math.PI) / 180;
     return calculateSunPathPoints(latInRadians, lowerBoundDayOfYear);
   }, [latitude]);
+
+  const compassDirections = useMemo(() => {
+    const radius = 1.2;
+    return [
+      { label: 'N', position: new Vector3(0, 0, -radius) },
+      { label: 'S', position: new Vector3(0, 0, radius) },
+      { label: 'E', position: new Vector3(radius, 0, 0) },
+      { label: 'W', position: new Vector3(-radius, 0, 0) },
+    ];
+  }, []);
 
   return (
     <group scale={[12, 12, 12]}>
@@ -66,102 +77,22 @@ const SunPath = () => {
         dashSize={0.2}
         gapSize={0.1}
       />
+      {/* Compass directions */}
+      {showCompass && compassDirections.map(({ label, position }) => (
+        <Text
+          key={label}
+          position={position}
+          rotation={[-Math.PI / 2, 0, 0]}
+          color="white"
+          fontSize={0.2}
+          anchorX="center"
+          anchorY="middle"
+        >
+          {label}
+        </Text>
+      ))}
     </group>
   );
 };
 
 export default SunPath;
-
-
-
-
-
-
-// import { useMemo } from 'react';
-// import { Line } from '@react-three/drei';
-// import { Vector3 } from 'three';
-// import { useControls } from 'leva';
-// import { calculateSunPathPoints } from '@/lib/sunPathUtils';
-
-// // Function to create infinity-like path points
-// const createInfinityPath = (month: number, timeOfDay: number, latitude: number) => {
-//   const points = [];
-//   const amplitude = 0.5;
-//   const frequency = 0.5;
-//   const centerY = 0;
-//   const latitudeFactor = Math.cos((latitude * Math.PI) / 180);
-
-//   for (let t = 0; t <= 2 * Math.PI; t += 0.1) {
-//     const x = Math.sin(t) * amplitude * Math.cos((month / 12) * Math.PI * 2);
-//     const y = centerY + Math.sin(frequency * t) * amplitude * latitudeFactor;
-//     const z = Math.cos(t) * amplitude * Math.sin((month / 12) * Math.PI * 2);
-//     points.push(new Vector3(x, y, z));
-//   }
-//   return points;
-// };
-
-// const generateCurvedSunPaths = (latitude: number, month: number) => {
-//   const paths = [];
-//   const sunriseHour = 6; // Approximate sunrise time
-//   const sunsetHour = 18; // Approximate sunset time
-  
-//   for (let hour = sunriseHour; hour <= sunsetHour; hour++) {
-//     const t = (hour - sunriseHour) / (sunsetHour - sunriseHour);
-//     const elevation = Math.sin(t * Math.PI) * 0.5;
-//     const radius = 0.5 + elevation * 0.2;
-//     const points = [];
-    
-//     for (let angle = 0; angle <= Math.PI; angle += 0.1) {
-//       const x = Math.cos(angle) * radius * Math.cos((month / 12) * Math.PI * 2);
-//       const y = Math.sin(angle) * radius + elevation;
-//       const z = Math.cos(angle) * radius * Math.sin((month / 12) * Math.PI * 2);
-//       points.push(new Vector3(x, y, z));
-//     }
-    
-//     paths.push(points);
-//   }
-  
-//   return paths;
-// };
-
-
-// const SunPath = () => {
-//   const { latitude, month, timeOfDay } = useControls({
-//     latitude: { value: 37.7749, min: -90, max: 90, step: 0.1 },
-//     month: { value: 6, min: 1, max: 12, step: 1 },
-//     timeOfDay: { value: 12, min: 0, max: 23, step: 1 },
-//   });
-
- 
-
-//   const infinityPathPoints = useMemo(() => createInfinityPath(month, timeOfDay, latitude), [month, timeOfDay, latitude]);
-//   const curvedSunPaths = useMemo(() => generateCurvedSunPaths(latitude, month), [latitude, month]);
-
-//   return (
-//     <group scale={[12, 12, 12]}>
-//     {/* Infinity path */}
-//     <Line
-//       points={infinityPathPoints}
-//       color="blue"
-//       lineWidth={2}
-//       dashed={true}
-//       dashSize={0.2}
-//       gapSize={0.1}
-//     />
-//     {/* Curved sun paths */}
-//     {curvedSunPaths.map((path, index) => (
-//       <Line
-//         key={index}
-//         points={path}
-//         color={`hsl(${index * 20}, 100%, 50%)`}
-//         lineWidth={1}
-//         dashed={true}
-//         dashSize={0.1}
-//         gapSize={0.05}
-//       />
-//     ))}
-//   </group>
-//   );
-// };
-
-// export default SunPath;

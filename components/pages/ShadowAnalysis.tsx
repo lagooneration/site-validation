@@ -67,35 +67,13 @@ const searchParams = useSearchParams()
                 <legend className="-ml-1 px-1 text-sm font-medium">
                   Upload
                 </legend>
-                <div className="flex flex-row gap-3">
+                <div className="flex flex-row gap-4">
                 <TooltipProvider>
                 <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon">
                                 <input type="file" accept="image/*" onChange={handleFileChange} /> 
-                                <LandPlot  className="size-5" />
-                                <span className="sr-only">Location screenshot</span>
-                            </Button>
                         </TooltipTrigger>
                         <TooltipContent side="top">Location screenshot</TooltipContent>
-                </Tooltip>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                            <ImageUp  className="size-5" />
-                            <span className="sr-only">Upload Image</span>
-                        </Button>
-                    </TooltipTrigger>
-                        <TooltipContent side="top">Upload Image</TooltipContent>
-                </Tooltip>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                            <Box  className="size-5" />
-                            <span className="sr-only">Upload Model</span>
-                        </Button>
-                    </TooltipTrigger>
-                        <TooltipContent side="top">Upload Model</TooltipContent>
                 </Tooltip>
                 </TooltipProvider>
                 </div>
