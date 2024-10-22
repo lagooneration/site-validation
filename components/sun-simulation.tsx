@@ -14,7 +14,7 @@ import { Line2 } from 'three/examples/jsm/lines/Line2.js';
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js';
 // import Cube from '@/components/three/Cube';
 
-
+import { useSlider } from "@/components/ui/SliderContext";
 
 
 const RADIUS = 50;
@@ -36,23 +36,19 @@ function getSunColor(y: number) {
 
 
 export const SunSimulation = () => {
-  const { time, month, longitude, latitude } = useControls({
-    time: { value: 12, min: 0, max: 23, step: 0.1 },
+  const { month, longitude, latitude } = useControls({
     month: { value: 6, min: 1, max: 12, step: 0.1 },
     longitude: { value: 0, min: -179, max: 180, step: 0.1 },
-    latitude: { value: 51, min: -80, max: 80, step: 0.1 },
+    latitude: { value: 51, min: -89, max: 89, step: 0.1 },
+    // time: { value: 12, min: 0, max: 23, step: 0.1 },
     // cube: { value: false, label: 'Cube' },
     // showCamHelper: false,
     // cameraScale: { value: 0.2, min: 0.1, max: 2_000_000 },
   });
 
-  // const { position, sunPath } = useSun({ latitude, longitude, month, time });
-
-  // function Sun({ latitude, longitude }: { longitude: number, latitude: number }) {
-
-    // const { position, sunPath } = useSun({ latitude, longitude, month, time });
+  const { value, setValue } = useSlider();
   
-    const { position, sunPath } = useSun({ latitude, longitude, month, time });
+    const { position, sunPath } = useSun({ latitude, longitude, month, value });
   
     const { showSunRay, cameraScale } = useControls({
       showSunRay: false,
@@ -171,18 +167,18 @@ function Floor() {
 
 
 
-function useSun({ latitude, longitude, month, time }: { longitude: number, latitude: number, month: number, time: number }) {
+function useSun({ latitude, longitude, month, value }: { longitude: number, latitude: number, month: number, value: number }) {
   const date = useMemo(() => {
     const timeZone = tzLookup(latitude, longitude);
     return DateTime.now().setZone(timeZone).set({
       month: Math.floor(month),
       day: Math.floor((month % 1) * 27) + 1,
-      hour: Math.floor(time),
-      minute: (time % 1) * 60,
+      hour: Math.floor(value),
+      minute: (value % 1) * 60,
       second: 0,
       millisecond: 0,
     }).toJSDate();
-  }, [latitude, longitude, month, time]);
+  }, [latitude, longitude, month, value]);
 
   const { position, sunPath } = useMemo(() => {
     const position = getSunPosition({ date, latitude, longitude });

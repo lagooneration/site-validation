@@ -22,7 +22,7 @@ const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage })
     });
 
     const compassDirections = useMemo(() => {
-        const radius = 12.0;
+        const radius = 50.0;
         return [
           { label: 'N', position: new Vector3(0, 0, -radius) },
           { label: 'S', position: new Vector3(0, 0, radius) },
@@ -46,7 +46,7 @@ const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage })
                     strokeWidth={0.08}
                     strokeColor="black"
                     color={label === 'N' ? 'red' : 'white'}
-                    fontSize={3}
+                    fontSize={12}
                     anchorX="center"
                     anchorY="middle"
                 >

@@ -6,40 +6,32 @@ import { Label } from "@/components/ui/label";
 import { useSlider } from "@/components/ui/SliderContext";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-const formatTime = (hours: number, minutes: number) => {
+const formatTime = (value: number) => {
+  const hours = Math.floor(value);
+  const minutes = Math.round((value % 1) * 60);
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 };
 
 export function Day() {
   const { value, setValue } = useSlider();
   const [showTooltip, setShowTooltip] = useState(false);
-  const defaultValue = 12 * 60; // 12 hours in minutes
-  const [currentValue, setCurrentValue] = useState(defaultValue);
-  const hours = Math.floor(currentValue / 60);
-  const minutes = currentValue % 60;
+  const defaultValue = 12; // 12 hours
 
   React.useEffect(() => {
     setValue(defaultValue);
   }, []);
 
-  React.useEffect(() => {
-    setCurrentValue(value);
-  }, [value]);
-
-
   const handleValueChange = (newValue: number[]) => {
-    setValue(Math.round(newValue[0]));
+    setValue(newValue[0]);
   };
 
   const isDaytime = (time: number) => {
-    const hour = Math.floor(time / 60);
-    return hour >= 6 && hour < 18;
+    return time >= 6 && time < 18;
   };
-
 
   return (
     <div className="grid gap-3">
-      <Label htmlFor="daytime">Time: <span className={isDaytime(value) ? "text-yellow-500" : "text-blue-500"}>{formatTime(hours, minutes)}</span></Label>
+      <Label htmlFor="daytime">Time: <span className={isDaytime(value) ? "text-yellow-500" : "text-blue-500"}>{formatTime(value)}</span></Label>
       <div className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
         <TooltipProvider>
           <Tooltip open={showTooltip}>
@@ -47,8 +39,9 @@ export function Day() {
               <Slider
                 id="daytime"
                 value={[value]}
-                max={24 * 60 - 1}
-                step={1}
+                max={23.9}
+                min={0}
+                step={0.1}
                 onValueChange={handleValueChange}
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}

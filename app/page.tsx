@@ -37,12 +37,23 @@ export default function Home() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center min-h-screen"
+    style={{
+      backgroundImage: "url('/assets/intro.png')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      height: '100vh',
+      width: '100vw',
+      filter: 'brightness(90%)',
+    }}
+    >
+      <div className="absolute inset-0 bg-black bg-opacity-85" >
+      <div className="flex justify-center items-center min-h-screen">
     <Card className="mx-auto max-w-sm">
       <CardHeader>
         <CardTitle className="text-xl">Shadow Analysis</CardTitle>
         <CardDescription>
-          Upload screenshot of your location
+          Enter details of your property
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -67,9 +78,8 @@ export default function Home() {
               onChange={handleInputChange}
             />
           </div>
-          <div className="grid gap-2">
+          {/* <div className="grid gap-2">
             <Label htmlFor="screenshot">Upload Screenshot</Label>
-            {/* <Input id="screenshot" type="file" accept="image/*" onChange={handleInputChange} /> */}
             <input id="screenshot" type="file" accept="image/*" required onChange={handleInputChange}
             className="block w-full text-sm text-gray-500
                   file:me-4 file:py-2 file:px-4
@@ -82,7 +92,7 @@ export default function Home() {
                   dark:file:bg-blue-900
                   dark:hover:file:bg-blue-600
                 "/>
-          </div>
+          </div> */}
           <Button type="submit" className="w-full">
             Get Started
           </Button>
@@ -95,6 +105,8 @@ export default function Home() {
         </div>
       </CardContent>
     </Card>
+    </div>
+    </div>
     </div>
   )
 }

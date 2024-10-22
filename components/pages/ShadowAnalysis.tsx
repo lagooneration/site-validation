@@ -76,7 +76,7 @@ const searchParams = useSearchParams()
             </form>
           </div>
           <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
-            <div className="w-[1112px] h-[800px]">
+            <div className="w-[1086px] h-[800px]">
                 <Experience uploadedImage={uploadedImage} />
             </div>
             <Badge variant="outline" className="absolute left-6 top-6">
@@ -94,7 +94,7 @@ const searchParams = useSearchParams()
                         <TooltipTrigger asChild>
                                 <input type="file" accept="image/*" onChange={handleFileChange} /> 
                         </TooltipTrigger>
-                        <TooltipContent side="top">Location screenshot</TooltipContent>
+                        <TooltipContent side="top">Location</TooltipContent>
                 </Tooltip>
                 </TooltipProvider>
                 </div>
