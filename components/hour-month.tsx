@@ -21,6 +21,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 
+
 const calculateTiltAngle = (latitude: number): number => {
   // Simplified formula for tilt angle
   return Math.abs(latitude) * 0.76 + 3.1;
@@ -33,7 +34,7 @@ const calculateAzimuthAngle = (longitude: number): number => {
 
 const fetchPVWattsData = async (tilt: number, azimuth: number, latitude: number, longitude: number, capacity: number) => {
   try {
-    const apiKey = process.env.PVWATTS_API_KEY;
+    const apiKey = process.env.NEXT_PUBLIC_PVWATTS_API_KEY;
     if (!apiKey) {
       throw new Error('PVWATTS_API_KEY is not defined in .env.local');
     }
@@ -44,7 +45,7 @@ const fetchPVWattsData = async (tilt: number, azimuth: number, latitude: number,
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    // console.log(data);
+    console.log(data);
     return data;
   } catch (error) {
     console.error('Fetch error:', error);
