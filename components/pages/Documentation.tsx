@@ -1,4 +1,4 @@
-// 'use client'
+'use client'
 // import { Billboard, Line, Plane, Ring, Sphere, useHelper } from "@react-three/drei";
 // import { useFrame } from "@react-three/fiber";
 // import { useControls } from "leva";
@@ -285,6 +285,74 @@
 //   return [x, y, z];
 // }
 
+
+import { useSearchParams } from "next/navigation"
+import { useState, useEffect } from "react"
+
+// const calculateTiltAngle = (latitude: number): number => {
+//   // Simplified formula for tilt angle
+//   return Math.abs(latitude) * 0.76 + 3.1;
+// };
+
+// const calculateAzimuthAngle = (longitude: number): number => {
+//   // Simplified formula for azimuth angle
+//   return (longitude + 180) % 360;
+// };
+
+// const fetchPVWattsData = async (tilt: number, azimuth: number, latitude: number, longitude: number, capacity: number) => {
+//   try {
+//     const apiKey = 'wICEpg2qi4Vw8IIZIKEHK1KsABecYv3GzKhbJspn'; // Replace with your actual API key
+//     const url = `https://developer.nrel.gov/api/pvwatts/v8.json?api_key=${apiKey}&system_capacity=${capacity}&module_type=0&losses=14&array_type=1&tilt=${tilt}&azimuth=${azimuth}&lat=${latitude}&lon=${longitude}`;
+    
+//     const response = await fetch(url);
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! status: ${response.status}`);
+//     }
+//     const data = await response.json();
+//     console.log(data);
+//     return data;
+//   } catch (error) {
+//     console.error('Fetch error:', error);
+//   }
+// };
+
+
 export default function Documentation() {
-  return <div>Documentation</div>
+
+  // const searchParams = useSearchParams()
+
+  // const latitude = searchParams.get("latitude");
+  // const longitude = searchParams.get("longitude");
+  // const capacity = searchParams.get("capacity");
+
+
+  // const [tiltAngle, setTiltAngle] = useState<number | null>(null);
+  // const [azimuthAngle, setAzimuthAngle] = useState<number | null>(null);
+  // const [pvWattsData, setPvWattsData] = useState<any | null>(null);
+
+  // useEffect(() => {
+  //   if (latitude && longitude && capacity) {
+  //     const lat = parseFloat(latitude);
+  //     const lon = parseFloat(longitude);
+  //     const cap = parseFloat(capacity);
+  //     const tilt = calculateTiltAngle(lat);
+  //     const azimuth = calculateAzimuthAngle(lon);
+  //     setTiltAngle(tilt);
+  //     setAzimuthAngle(azimuth);
+  //     console.table({tilt, azimuth, lat, lon, cap})
+      
+  //     fetchPVWattsData(tilt, azimuth, lat, lon, cap)
+  //       .then(data => setPvWattsData(data))
+  //       .catch(error => console.error('Error fetching PVWatts data:', error));
+  //   }
+  // }, [latitude, longitude, capacity]);
+
+  return(
+    <div>
+      <h1>Documentation</h1>
+    </div>
+  )
 }
+
+
+

@@ -29,6 +29,7 @@ const searchParams = useSearchParams()
 
   const latitude = searchParams.get("latitude")
   const longitude = searchParams.get("longitude")
+  const capacity = searchParams.get("capacity")
   const propertyName = searchParams.get("propertyName")
   // const screenshot = searchParams.get("screenshot")
 

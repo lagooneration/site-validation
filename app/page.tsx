@@ -12,21 +12,31 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 
 export default function Home() {
   const [formData, setFormData] = useState({
     latitude: "",
     longitude: "",
     propertyName: "",
-    screenshot: null
+    capacity: ""
   })
   const router = useRouter()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value, files } = e.target
+    const { id, value } = e.target
     setFormData(prev => ({
       ...prev,
-      [id]: id === "screenshot" ? files[0] : value
+      [id]: value
     }))
   }
 
@@ -44,10 +54,10 @@ export default function Home() {
       backgroundPosition: 'center',
       height: '100vh',
       width: '100vw',
-      filter: 'brightness(90%)',
+      filter: 'brightness(80%)',
     }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-85" >
+      <div className="absolute inset-0 bg-black bg-opacity-90" >
       <div className="flex justify-center items-center min-h-screen">
     <Card className="mx-auto max-w-sm">
       <CardHeader>
@@ -67,6 +77,10 @@ export default function Home() {
               <Label htmlFor="longitude">Longitude</Label>
               <Input id="longitude" placeholder="-74.0060" required onChange={handleInputChange} />
             </div>
+          </div>
+          <div className="grid gap-2 w-full">
+            <Label htmlFor="capacity">Panel Capacity (kW)</Label>
+              <Input id="capacity" placeholder="10" required onChange={handleInputChange} />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="propertyName">Property Name</Label>

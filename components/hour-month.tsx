@@ -17,23 +17,43 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+
+const calculateTiltAngle = (latitude: number): number => {
+  // Simplified formula for tilt angle
+  return Math.abs(latitude) * 0.76 + 3.1;
+};
+
+const calculateAzimuthAngle = (longitude: number): number => {
+  // Simplified formula for azimuth angle
+  return (longitude + 180) % 360;
+};
+
+const fetchPVWattsData = async (tilt: number, azimuth: number, latitude: number, longitude: number, capacity: number) => {
+  try {
+    const apiKey = process.env.PVWATTS_API_KEY;
+    if (!apiKey) {
+      throw new Error('PVWATTS_API_KEY is not defined in .env.local');
+    }
+    const url = `https://developer.nrel.gov/api/pvwatts/v8.json?api_key=${apiKey}&system_capacity=${capacity}&module_type=0&losses=14&array_type=1&tilt=${tilt}&azimuth=${azimuth}&lat=${latitude}&lon=${longitude}`;
+    
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error('Fetch error:', error);
+  }
+};
 
 export const description = "An area chart with gradient fill"
 
-const chartData = [
-  { month: "January", sunlight: 266, units: 99 },
-  { month: "February", sunlight: 275, units: 115 },
-  { month: "March", sunlight: 278, units: 120 },
-  { month: "April", sunlight: 287, units: 127 },
-  { month: "May", sunlight: 299, units: 132 },
-  { month: "June", sunlight: 314, units: 140 },
-  { month: "July", sunlight: 316, units: 141 },
-  { month: "August", sunlight: 311, units: 136 },
-  { month: "September", sunlight: 294, units: 122 },
-  { month: "October", sunlight: 284, units: 110 },
-  { month: "November", sunlight: 272, units: 101 },
-  { month: "December", sunlight: 254, units: 96 },
-]
+
 
 const chartConfig = {
   desktop: {
@@ -46,19 +66,70 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function HourMonth() {
+export const HourMonth = () => {
+
+  const searchParams = useSearchParams()
+
+  const latitude = searchParams.get("latitude");
+  const longitude = searchParams.get("longitude");
+  const capacity = searchParams.get("capacity");
+
+  const [tiltAngle, setTiltAngle] = useState<number | null>(null);
+  const [azimuthAngle, setAzimuthAngle] = useState<number | null>(null);
+  const [pvWattsData, setPvWattsData] = useState<any | null>(null);
+
+  useEffect(() => {
+    if (latitude && longitude && capacity) {
+      const lat = parseFloat(latitude);
+      const lon = parseFloat(longitude);
+      const cap = parseFloat(capacity);
+      const tilt = calculateTiltAngle(lat);
+      const azimuth = calculateAzimuthAngle(lon);
+      setTiltAngle(tilt);
+      setAzimuthAngle(azimuth);
+      console.table({tilt, azimuth, lat, lon, cap})
+      
+      fetchPVWattsData(tilt, azimuth, lat, lon, cap)
+        .then(data => setPvWattsData(data))
+        .catch(error => console.error('Error fetching PVWatts data:', error));
+    }
+  }, [latitude, longitude, capacity]);
+
+
+  const [chartData, setChartData] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (pvWattsData && pvWattsData.outputs && pvWattsData.station_info) {
+      const { solrad_monthly, solrad_annual } = pvWattsData.outputs;
+      // const { location, state, country } = pvWattsData.station_info;
+
+      const monthNames = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+      ];
+      
+      const newChartData = solrad_monthly.map((value: number, index: number) => ({
+        month: monthNames[index],
+        monthly: value,
+        annual: solrad_annual
+      }));
+      
+      setChartData(newChartData);
+    }
+  }, [pvWattsData]);
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Sunlight Coverage</CardTitle>
+        <CardTitle>Solar Radiation</CardTitle>
         <CardDescription>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              4.2 units per day <TrendingUp className="h-4 w-4" />
+          <div className="flex w-full items-start gap-2 text-sm">
+            <div className="grid gap-2">
+              <div className="flex items-center gap-2 font-medium leading-none">
+                {pvWattsData?.outputs?.solrad_annual.toFixed(2)} kWh/m²/day (Annual Average) <TrendingUp className="h-4 w-4" />
+              </div>
             </div>
           </div>
-        </div>
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -77,11 +148,10 @@ export function HourMonth() {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <defs>
-              <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="fillMonthly" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
                   stopColor="var(--color-desktop)"
@@ -90,41 +160,36 @@ export function HourMonth() {
                 <stop
                   offset="95%"
                   stopColor="var(--color-desktop)"
-                  stopOpacity={0.1}
-                />
-              </linearGradient>
-              <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="var(--color-mobile)"
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="var(--color-mobile)"
                   stopOpacity={0.1}
                 />
               </linearGradient>
             </defs>
             <Area
-              dataKey="units"
-              type="natural"
-              fill="url(#fillMobile)"
-              fillOpacity={0.4}
-              stroke="var(--color-mobile)"
-              stackId="a"
-            />
-            <Area
-              dataKey="sunlight"
-              type="natural"
-              fill="url(#fillDesktop)"
+              dataKey="monthly"
+              type="monotone"
+              fill="url(#fillMonthly)"
               fillOpacity={0.4}
               stroke="var(--color-desktop)"
-              stackId="a"
+              name="Monthly Solar Radiation"
+            />
+            <Area
+              dataKey="annual"
+              type="monotone"
+              fill="url(#fillAnnual)"
+              fillOpacity={0.4}
+              stroke="var(--color-mobile)"
+              name="Annual Solar Radiation"
             />
           </AreaChart>
         </ChartContainer>
       </CardContent>
+      <CardFooter>
+        <div className="text-muted-foreground">
+          {pvWattsData?.station_info?.location}
+          <br />
+          {pvWattsData?.station_info?.state}, {pvWattsData?.station_info?.country}
+        </div>
+      </CardFooter>
     </Card>
   )
 }
