@@ -9,7 +9,7 @@ import Help from '@/components/pages/Help'
 // import Account from '@/components/pages/Account'
 // import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 // import { useSearchParams } from "next/navigation"
-import Home from '@/components/ui/home'
+import { Home } from '@/components/ui/home'
 
 import { SliderProvider } from '@/components/ui/SliderContext'
 
@@ -36,7 +36,7 @@ export const Dashboard = () => {
   return (
     <main className="flex-1 overflow-auto p-6 mt-12 ml-14">
       <SliderProvider>
-      {ActiveComponent ? <ActiveComponent /> : <Home />}
+      {ActiveComponent ? <ActiveComponent /> : <Home /> }
       
       
     </SliderProvider>
