@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input"
 
 export const description = "An interactive bar chart"
 
-const Barchart: React.FC = () => {
+const Emicalc: React.FC = () => {
   // Input Variables
   const [panelCapacity, setPanelCapacity] = useState<number>(0); // in kW
   const [budget, setBudget] = useState<number>(0); // in INR
@@ -163,11 +163,6 @@ const Barchart: React.FC = () => {
       </CardHeader>
       <CardContent className="px-2 sm:p-6">
       <form className="grid w-full items-start gap-6">
-      <div className="grid gap-3">
-      <Label>Estimated Budget:{' '} 
-                {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(budget)}
-                </Label>
-              </div>
               <div className="flex flex-col gap-2 text-muted-foreground">
                 <Label>Solar Energy Generated: {energySaved.toFixed(2)} kWh / year</Label>
                 <Label>Cost Reduction: {costReduction}%</Label>
@@ -175,7 +170,14 @@ const Barchart: React.FC = () => {
                   Estimated EMI:{' '} 
                   {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(emi)} / month
                 </Label>
-                </div>
+              </div>
+              <div className="grid gap-3">
+              <Label>Estimated Budget:{' '} 
+                <span className="text-red-500">
+                {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(budget)}
+                </span>
+              </Label>
+              </div>
             </form>
             <Card
               className="w-full mt-4" x-chunk="charts-01-chunk-6"
@@ -187,7 +189,9 @@ const Barchart: React.FC = () => {
               </CardHeader>
               <CardContent className="flex flex-row items-baseline gap-4 p-4 pt-2">
                 <div className="flex items-baseline gap-2 text-3xl font-bold tabular-nums leading-none">
+                <span className="text-green-500">
                   {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format((energySaved/12) * electricityCost)}
+                </span>
                 </div>
                 <ChartContainer
                   config={{
@@ -263,4 +267,4 @@ const Barchart: React.FC = () => {
   )
 }
 
-export default Barchart;
+export default Emicalc;

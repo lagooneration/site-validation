@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import Image from 'next/image'
 // import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import {
   Bar,
@@ -73,20 +74,28 @@ const searchParams = useSearchParams()
                 <legend className="-ml-1 px-1 text-sm font-medium">
                   {propertyName}
                 </legend>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="grid gap-3">
-                    <Label htmlFor="lat">Latitude</Label>
-                    <Input id="lat" type="number" placeholder={`${latitude}`} />
-                  </div>
+                <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-rows-2 gap-2">
+                      <div className="grid grid-cols-2 items-center">
+                        <Label>
+                        <span className="text-muted-foreground">Latitude:</span>
+                        </Label>
+                        <Input id="lat" type="number" placeholder={`${latitude}`} />
+                        <Label>
+                        <span className="text-muted-foreground">Longitude:</span>
+                        </Label>
+                        <Input id="long" type="number" placeholder={`${longitude}`}/>
+                      </div>
+                      <div className="grid gap-3 mt-4">
+                        <Day />     
+                      </div>
+                    </div>
+
+                    <div className="h-full w-full flex items-center justify-center">
+                      <Image src="/assets/location1.png" alt="sun" width={220} height={200} />
+                    </div>
+                </div>
                   
-                  <div className="grid gap-3">
-                    <Label htmlFor="long">Longitude</Label>
-                    <Input id="long" type="number" placeholder={`${longitude}`}/>
-                  </div>
-                  </div>
-                  <div className="grid gap-3 w-1/2">
-                    <Day />     
-                  </div>
               </fieldset>
               <div className="grid gap-3">
                   <DataCharts />

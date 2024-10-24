@@ -17,7 +17,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { HourMonth } from "./hour-month"
-import  Barchart from "@/components/ui/barchart"
+import  Emicalc from "@/components/ui/emicalc"
 
 
 export function DataCharts() {
@@ -31,7 +31,7 @@ export function DataCharts() {
             <HourMonth />
       </TabsContent>
       <TabsContent value="password">
-        <Barchart />
+        <Emicalc />
       </TabsContent>
     </Tabs>
   )
