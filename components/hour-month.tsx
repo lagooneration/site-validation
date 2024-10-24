@@ -38,7 +38,7 @@ const fetchPVWattsData = async (tilt: number, azimuth: number, latitude: number,
     if (!apiKey) {
       throw new Error('PVWATTS_API_KEY is not defined in .env.local');
     }
-    const url = `https://developer.nrel.gov/api/pvwatts/v8.json?api_key=${apiKey}&system_capacity=${capacity}&module_type=0&losses=14&array_type=1&tilt=${tilt}&azimuth=${azimuth}&lat=${latitude}&lon=${longitude}`;
+    const url = `htttps://developer.nrel.gov/api/pvwatts/v8.json?api_key=${apiKey}&system_capacity=${capacity}&module_type=0&losses=14&array_type=1&tilt=${tilt}&azimuth=${azimuth}&lat=${latitude}&lon=${longitude}`;
     
     const response = await fetch(url);
     if (!response.ok) {

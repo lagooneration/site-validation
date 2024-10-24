@@ -17,7 +17,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { HourMonth } from "./hour-month"
-import { Barchart } from "@/components/ui/barchart"
+import  Barchart from "@/components/ui/barchart"
 
 
 export function DataCharts() {

@@ -33,7 +33,7 @@ const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage })
 
     return (
         <>
-            <Canvas camera={{ position: [3, 9, 9], fov: 75, near: 0.1, far: 1000 }}>
+            <Canvas camera={{ position: [72, -72, -128], fov: 75, near: 0.1, far: 1000 }}>
                 <ambientLight intensity={0.2}/>
                 {/* <SunPath /> */}
                 {showEarth && <Earth />}
@@ -41,12 +41,12 @@ const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage })
                 {showCompass && compassDirections.map(({ label, position }) => (
                 <Text
                     key={label}
-                    position={position}
-                    rotation={[-Math.PI / 2, 0, 0]}
+                    position={position.add(new Vector3(0, 1, 1))}
+                    rotation={[-Math.PI / 3, 0, 0]}
                     strokeWidth={0.08}
                     strokeColor="black"
                     color={label === 'N' ? 'red' : 'white'}
-                    fontSize={12}
+                    fontSize={8}
                     anchorX="center"
                     anchorY="middle"
                 >

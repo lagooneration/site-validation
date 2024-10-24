@@ -1,12 +1,13 @@
 "use client"
 
-import * as React from "react"
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+import React, { useState, useEffect } from "react"
+import { Bar, BarChart, CartesianGrid, Rectangle, XAxis } from "recharts"
 
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -16,206 +17,250 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
 
 export const description = "An interactive bar chart"
 
-const chartData = [
-  { date: "2024-04-01", sunlight: 222, units: 150 },
-  { date: "2024-04-02", sunlight: 97, units: 180 },
-  { date: "2024-04-03", sunlight: 167, units: 120 },
-  { date: "2024-04-04", sunlight: 242, units: 260 },
-  { date: "2024-04-05", sunlight: 373, units: 290 },
-  { date: "2024-04-06", sunlight: 301, units: 340 },
-  { date: "2024-04-07", sunlight: 245, units: 180 },
-  { date: "2024-04-08", sunlight: 409, units: 320 },
-  { date: "2024-04-09", sunlight: 59, units: 110 },
-  { date: "2024-04-10", sunlight: 261, units: 190 },
-  { date: "2024-04-11", sunlight: 327, units: 350 },
-  { date: "2024-04-12", sunlight: 292, units: 210 },
-  { date: "2024-04-13", sunlight: 342, units: 380 },
-  { date: "2024-04-14", sunlight: 137, units: 220 },
-  { date: "2024-04-15", sunlight: 120, units: 170 },
-  { date: "2024-04-16", sunlight: 138, units: 190 },
-  { date: "2024-04-17", sunlight: 446, units: 360 },
-  { date: "2024-04-18", sunlight: 364, units: 410 },
-  { date: "2024-04-19", sunlight: 243, units: 180 },
-  { date: "2024-04-20", sunlight: 89, units: 150 },
-  { date: "2024-04-21", sunlight: 137, units: 200 },
-  { date: "2024-04-22", sunlight: 224, units: 170 },
-  { date: "2024-04-23", sunlight: 138, units: 230 },
-  { date: "2024-04-24", sunlight: 387, units: 290 },
-  { date: "2024-04-25", sunlight: 215, units: 250 },
-  { date: "2024-04-26", sunlight: 75, units: 130 },
-  { date: "2024-04-27", sunlight: 383, units: 420 },
-  { date: "2024-04-28", sunlight: 122, units: 180 },
-  { date: "2024-04-29", sunlight: 315, units: 240 },
-  { date: "2024-04-30", sunlight: 454, units: 380 },
-  { date: "2024-05-01", sunlight: 165, units: 220 },
-  { date: "2024-05-02", sunlight: 293, units: 310 },
-  { date: "2024-05-03", sunlight: 247, units: 190 },
-  { date: "2024-05-04", sunlight: 385, units: 420 },
-  { date: "2024-05-05", sunlight: 481, units: 390 },
-  { date: "2024-05-06", sunlight: 498, units: 520 },
-  { date: "2024-05-07", sunlight: 388, units: 300 },
-  { date: "2024-05-08", sunlight: 149, units: 210 },
-  { date: "2024-05-09", sunlight: 227, units: 180 },
-  { date: "2024-05-10", sunlight: 293, units: 330 },
-  { date: "2024-05-11", sunlight: 335, units: 270 },
-  { date: "2024-05-12", sunlight: 197, units: 240 },
-  { date: "2024-05-13", sunlight: 197, units: 160 },
-  { date: "2024-05-14", sunlight: 448, units: 490 },
-  { date: "2024-05-15", sunlight: 473, units: 380 },
-  { date: "2024-05-16", sunlight: 338, units: 400 },
-  { date: "2024-05-17", sunlight: 499, units: 420 },
-  { date: "2024-05-18", sunlight: 315, units: 350 },
-  { date: "2024-05-19", sunlight: 235, units: 180 },
-  { date: "2024-05-20", sunlight: 177, units: 230 },
-  { date: "2024-05-21", sunlight: 82, units: 140 },
-  { date: "2024-05-22", sunlight: 81, units: 120 },
-  { date: "2024-05-23", sunlight: 252, units: 290 },
-  { date: "2024-05-24", sunlight: 294, units: 220 },
-  { date: "2024-05-25", sunlight: 201, units: 250 },
-  { date: "2024-05-26", sunlight: 213, units: 170 },
-  { date: "2024-05-27", sunlight: 420, units: 460 },
-  { date: "2024-05-28", sunlight: 233, units: 190 },
-  { date: "2024-05-29", sunlight: 78, units: 130 },
-  { date: "2024-05-30", sunlight: 340, units: 280 },
-  { date: "2024-05-31", sunlight: 178, units: 230 },
-  { date: "2024-06-01", sunlight: 178, units: 200 },
-  { date: "2024-06-02", sunlight: 470, units: 410 },
-  { date: "2024-06-03", sunlight: 103, units: 160 },
-  { date: "2024-06-04", sunlight: 439, units: 380 },
-  { date: "2024-06-05", sunlight: 88, units: 140 },
-  { date: "2024-06-06", sunlight: 294, units: 250 },
-  { date: "2024-06-07", sunlight: 323, units: 370 },
-  { date: "2024-06-08", sunlight: 385, units: 320 },
-  { date: "2024-06-09", sunlight: 438, units: 480 },
-  { date: "2024-06-10", sunlight: 155, units: 200 },
-  { date: "2024-06-11", sunlight: 92, units: 150 },
-  { date: "2024-06-12", sunlight: 492, units: 420 },
-  { date: "2024-06-13", sunlight: 81, units: 130 },
-  { date: "2024-06-14", sunlight: 426, units: 380 },
-  { date: "2024-06-15", sunlight: 307, units: 350 },
-  { date: "2024-06-16", sunlight: 371, units: 310 },
-  { date: "2024-06-17", sunlight: 475, units: 520 },
-  { date: "2024-06-18", sunlight: 107, units: 170 },
-  { date: "2024-06-19", sunlight: 341, units: 290 },
-  { date: "2024-06-20", sunlight: 408, units: 450 },
-  { date: "2024-06-21", sunlight: 169, units: 210 },
-  { date: "2024-06-22", sunlight: 317, units: 270 },
-  { date: "2024-06-23", sunlight: 480, units: 530 },
-  { date: "2024-06-24", sunlight: 132, units: 180 },
-  { date: "2024-06-25", sunlight: 141, units: 190 },
-  { date: "2024-06-26", sunlight: 434, units: 380 },
-  { date: "2024-06-27", sunlight: 448, units: 490 },
-  { date: "2024-06-28", sunlight: 149, units: 200 },
-  { date: "2024-06-29", sunlight: 103, units: 160 },
-  { date: "2024-06-30", sunlight: 446, units: 400 },
-]
+const Barchart: React.FC = () => {
+  // Input Variables
+  const [panelCapacity, setPanelCapacity] = useState<number>(0); // in kW
+  const [budget, setBudget] = useState<number>(0); // in INR
+  const [electricityCost, setElectricityCost] = useState<number>(7); // per kWh
+  const [interestRate, setInterestRate] = useState<number>(8); // annual interest rate
+  const [years, setYears] = useState<number>(5); // loan period
+  const [energySaved, setEnergySaved] = useState<number>(0); // in kWh per year
+  const [electricityBill, setElectricityBill] = useState<number>(10000); // monthly electricity bill in INR
+  const [costReduction, setCostReduction] = useState<number>(0); // percentage reduction in electricity cost
 
-const chartConfig = {
-  views: {
-    label: "Units saved",
-  },
-  sunlight: {
-    label: "Sunlight",
-    color: "hsl(var(--chart-1))",
-  },
-  units: {
-    label: "Units",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig
+  // Calculated EMI value
+  const [emi, setEmi] = useState<number>(0);
 
-export function Barchart() {
-  const [activeChart, setActiveChart] =
-    React.useState<keyof typeof chartConfig>("sunlight")
+  // Dynamic chart data
+  const [roiData, setRoiData] = useState<any>(null);
 
-  const total = React.useMemo(
-    () => ({
-      sunlight: chartData.reduce((acc, curr) => acc + curr.sunlight, 0),
-      units: chartData.reduce((acc, curr) => acc + curr.units, 0),
-    }),
-    []
-  )
+   // Calculate EMI using the standard EMI formula
+   const calculateEMI = () => {
+    const monthlyRate = interestRate / (12 * 100);
+    const n = years * 12; // Total months
+    const emiValue = (budget * monthlyRate * Math.pow(1 + monthlyRate, n)) / (Math.pow(1 + monthlyRate, n) - 1);
+    setEmi(parseFloat(emiValue.toFixed(2)));
+  };
+
+  // Estimate Energy Savings based on Panel Capacity (Assumption: 4 hours sun/day)
+  const estimateEnergySaved = () => {
+    const yearlyEnergy = panelCapacity * 4 * 365; // kWh per year
+    setEnergySaved(yearlyEnergy);
+  };
+
+  // Generate ROI data dynamically for the graph
+  const generateRoiData = () => {
+    const savingsPerYear = energySaved * electricityCost;
+    const roi = Array.from({ length: years }, (_, i) => savingsPerYear * (i + 1)); // Accumulated savings
+    setRoiData({
+      labels: Array.from({ length: years }, (_, i) => `Year ${i + 1}`),
+      datasets: [
+        {
+          label: 'Cumulative Savings (INR)',
+          data: roi,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          tension: 0.3,
+        },
+      ],
+    });
+  };
+  
+  // Calculate percentage reduction in electricity cost
+  const calculateCostReduction = () => {
+    const monthlySavings = (energySaved / 12) * electricityCost;
+    const reductionPercentage = (monthlySavings / electricityBill) * 100;
+    setCostReduction(parseFloat(reductionPercentage.toFixed(2)));
+  };
+
+  // Update EMI, energy savings, and ROI on state change
+  useEffect(() => {
+    calculateEMI();
+    estimateEnergySaved();
+    generateRoiData();
+    calculateCostReduction();
+    setBudget(panelCapacity * 52000);
+  }, [panelCapacity, budget, electricityCost, interestRate, years, electricityBill]);
 
   return (
+    <div className="flex flex-col gap-4">
     <Card>
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Energy Savings</CardTitle>
-          <CardDescription>
-            Energy savings for last 3 months
-          </CardDescription>
+            <div className="grid grid-cols-2 gap-2 items-center justify-between">
+                  <Label className="flex flex-row items-center gap-2">
+                  <span className="text-muted-foreground">Panel Capacity: </span>
+                  <span className="flex items-center h-10 w-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
+                  {panelCapacity} kW
+                  </span>
+                  </Label>
+                  <div className="flex items-center h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
+                  <Input
+                    type="range"
+                    min="0"
+                    max="1000"
+                    step="10"
+                    value={panelCapacity}
+                    onChange={(e) => setPanelCapacity(parseInt(e.target.value))}
+                    style={{ width: '100%' }}
+                  />
+            </div>
+          </div>
         </div>
-        <div className="flex">
-          {["sunlight", "units"].map((key) => {
-            const chart = key as keyof typeof chartConfig
-            return (
-              <button
-                key={chart}
-                data-active={activeChart === chart}
-                className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
-                onClick={() => setActiveChart(chart)}
-              >
-                <span className="text-xs text-muted-foreground">
-                  {chartConfig[chart].label}
-                </span>
-                <span className="text-lg font-bold leading-none sm:text-3xl">
-                  {total[key as keyof typeof total].toLocaleString()}
-                </span>
-              </button>
-            )
-          })}
+      </CardHeader>
+      <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
+        <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
+        <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-2 items-center">
+            <Label>
+            <span className="text-muted-foreground">Unit Cost (kWh):</span>
+            </Label>
+                  <Input
+                    type="number"
+                    value={electricityCost}
+                    onChange={(e) => setElectricityCost(parseFloat(e.target.value))}
+                  />
+            </div>
+            <div className="grid grid-cols-2 gap-2 items-center justify-between">
+            <Label>
+            <span className="text-muted-foreground">Interest (%):</span>
+            </Label>
+            <Input
+              type="number"
+              value={interestRate}
+              onChange={(e) => setInterestRate(parseFloat(e.target.value))}
+            />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-2 items-center">
+            <Label>
+            <span className="text-muted-foreground">Bill (monthly):</span>
+            </Label>
+                  <Input
+                    type="number"
+                    value={electricityBill}
+                    onChange={(e) => setElectricityBill(parseFloat(e.target.value))}
+                  />
+            </div>
+            <div className="grid grid-cols-2 gap-2 items-center justify-between">
+            <Label>
+            <span className="text-muted-foreground">Period (Years):</span>
+            </Label>
+            <Input
+              type="number"
+              value={years}
+              onChange={(e) => setYears(parseInt(e.target.value))}
+            />
+            </div>
+          </div>
         </div>
       </CardHeader>
       <CardContent className="px-2 sm:p-6">
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-[250px] w-full"
-        >
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="date"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              minTickGap={32}
-              tickFormatter={(value) => {
-                const date = new Date(value)
-                return date.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                })
-              }}
-            />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent
-                  className="w-[150px]"
-                  nameKey="views"
-                  labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })
+      <form className="grid w-full items-start gap-6">
+      <div className="grid gap-3">
+      <Label>Estimated Budget:{' '} 
+                {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(budget)}
+                </Label>
+              </div>
+              <div className="flex flex-col gap-2 text-muted-foreground">
+                <Label>Solar Energy Generated: {energySaved.toFixed(2)} kWh / year</Label>
+                <Label>Cost Reduction: {costReduction}%</Label>
+                <Label>
+                  Estimated EMI:{' '} 
+                  {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(emi)} / month
+                </Label>
+                </div>
+            </form>
+            <Card
+              className="w-full mt-4" x-chunk="charts-01-chunk-6"
+            >
+              <CardHeader className="p-4 pb-0">
+                <CardDescription>
+                Predicted annual savings based on the expected irradiance.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex flex-row items-baseline gap-4 p-4 pt-2">
+                <div className="flex items-baseline gap-2 text-3xl font-bold tabular-nums leading-none">
+                  {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format((energySaved/12) * electricityCost)}
+                </div>
+                <ChartContainer
+                  config={{
+                    calories: {
+                      label: "Calories",
+                      color: "hsl(var(--chart-1))",
+                    },
                   }}
-                />
-              }
-            />
-            <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
-          </BarChart>
-        </ChartContainer>
+                  className="ml-auto w-[64px]"
+                >
+                  <BarChart
+                    accessibilityLayer
+                    margin={{
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                    }}
+                    data={[
+                      {
+                        date: "2024-01-01",
+                        calories: 354,
+                      },
+                      {
+                        date: "2024-01-02",
+                        calories: 514,
+                      },
+                      {
+                        date: "2024-01-03",
+                        calories: 345,
+                      },
+                      {
+                        date: "2024-01-04",
+                        calories: 734,
+                      },
+                      {
+                        date: "2024-01-05",
+                        calories: 645,
+                      },
+                      {
+                        date: "2024-01-06",
+                        calories: 456,
+                      },
+                      {
+                        date: "2024-01-07",
+                        calories: 345,
+                      },
+                    ]}
+                  >
+                    <Bar
+                      dataKey="calories"
+                      fill="var(--color-calories)"
+                      radius={2}
+                      fillOpacity={0.2}
+                      activeIndex={6}
+                      activeBar={<Rectangle fillOpacity={0.8} />}
+                    />
+                    <XAxis
+                      dataKey="date"
+                      tickLine={false}
+                      axisLine={false}
+                      tickMargin={4}
+                      hide
+                    />
+                  </BarChart>
+                </ChartContainer>
+              </CardContent>
+            </Card>
       </CardContent>
     </Card>
+    
+  </div>
   )
 }
+
+export default Barchart;

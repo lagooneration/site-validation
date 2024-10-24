@@ -37,7 +37,7 @@ function getSunColor(y: number) {
 
 export const SunSimulation = () => {
   const { month, longitude, latitude } = useControls({
-    month: { value: 6, min: 1, max: 12, step: 0.1 },
+    month: { value: 4, min: 1, max: 12, step: 0.1 },
     longitude: { value: 0, min: -179, max: 180, step: 0.1 },
     latitude: { value: 51, min: -89, max: 89, step: 0.1 },
     // time: { value: 12, min: 0, max: 23, step: 0.1 },
@@ -197,7 +197,7 @@ function useSun({ latitude, longitude, month, value }: { longitude: number, lati
 function getSunPosition({ date, latitude, longitude, radius = RADIUS }: {
   date: Date; latitude: number; longitude: number; radius?: number;
 }): [number, number, number] {
-  const sun = getPosition(date, latitude, longitude);
+  const sun = getPosition(date, -latitude, longitude);
   const x = radius * Math.cos(sun.altitude) * -Math.sin(sun.azimuth);
   const z = radius * Math.cos(sun.altitude) * Math.cos(sun.azimuth);
   const y = radius * Math.sin(sun.altitude);

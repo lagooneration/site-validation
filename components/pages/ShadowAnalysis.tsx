@@ -2,12 +2,29 @@
 import React, { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 // import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-
 import {
-  Box,
-  SquareArrowOutDownLeft,
-  Paperclip,
-} from "lucide-react"
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  Rectangle,
+  XAxis,
+  YAxis,
+} from "recharts"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart"
+import { SquareArrowOutDownLeft, TrendingUp } from 'lucide-react';
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Day } from "../ui/day"
@@ -73,6 +90,9 @@ const searchParams = useSearchParams()
               </fieldset>
               <div className="grid gap-3">
                   <DataCharts />
+                </div>
+                <div className="grid -gap-3">
+                
                 </div>
             </form>
           </div>
