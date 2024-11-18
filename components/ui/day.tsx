@@ -47,7 +47,7 @@ export function Day() {
                 onMouseLeave={() => setShowTooltip(false)}
               />
             </TooltipTrigger>
-            <TooltipContent side="right" sideOffset={5}>
+            <TooltipContent side="top" sideOffset={15}>
               {isDaytime(value) ? (
                 <svg
                   id="dayIcon"

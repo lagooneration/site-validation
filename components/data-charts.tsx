@@ -28,7 +28,7 @@ export function DataCharts() {
         <TabsTrigger value="password">⚡Energy Savings</TabsTrigger>
       </TabsList>
       <TabsContent value="account">
-            <HourMonth />
+            {/* <HourMonth /> */}
       </TabsContent>
       <TabsContent value="password">
         <Emicalc />

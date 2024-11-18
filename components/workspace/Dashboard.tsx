@@ -190,7 +190,7 @@ export const Dashboard = () => {
           </CardContent>
         </Card>
         
-      <StockApi />
+      {/* <StockApi /> */}
       </div>
       <div className="grid w-full flex-1 gap-6 lg:max-w-[20rem]">
       <EnvData />

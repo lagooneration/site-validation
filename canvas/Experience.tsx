@@ -8,16 +8,21 @@ import Earth from '@/components/three/Earth';
 import { SunSimulation } from '@/components/sun-simulation';
 import { useControls } from 'leva';
 import { Vector3 } from 'three';
+import { useSearchParams } from 'next/navigation';
 
 
 
 const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage }) => {
+    const searchParams = useSearchParams();
+    const latitude = searchParams.get("latitude");
+    const longitude = searchParams.get("longitude");
     const texturePath = uploadedImage ? URL.createObjectURL(uploadedImage) : null;
     
     const { showGrid, showCompass, showEarth } = useControls({
         showGrid: { value: true, label: 'Grid' },
         showCompass: { value: false, label: 'Compass' },
         showEarth: { value: true, label: 'Earth' },
+        // showGola: { value: false, label: 'Gola' }
         // showCube: { value: false, label: 'Cube' }
     });
 
@@ -33,10 +38,11 @@ const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage })
 
     return (
         <>
-            <Canvas camera={{ position: [72, -72, -128], fov: 75, near: 0.1, far: 1000 }}>
+            <Canvas camera={{ position: [72, -72, -128], fov: 75, near: 0.1, far: 1000 }} shadows>
                 <ambientLight intensity={0.2}/>
                 {/* <SunPath /> */}
                 {showEarth && <Earth />}
+                {/* {showGola && <Gola />} */}
                 {/* {showCube && <Cube />} */}
                 {showCompass && compassDirections.map(({ label, position }) => (
                 <Text
@@ -57,7 +63,10 @@ const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage })
                     <Land texturePath={texturePath} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} />
                 )}
                 {showGrid && <Grid args={[100, 100]} position={[0, -0.5, 0]} />}
-                <SunSimulation />
+                <SunSimulation 
+                    initialLatitude={latitude ? parseFloat(latitude) : undefined}
+                    initialLongitude={longitude ? parseFloat(longitude) : undefined}
+                />
                 <OrbitControls />
             </Canvas>
         </>

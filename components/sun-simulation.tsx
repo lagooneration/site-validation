@@ -1,7 +1,7 @@
 "use client"
 // SunSimulation.tsx
 import { useMemo, useRef, useEffect } from 'react';
-import { Vector3, Color, BufferGeometry, BufferAttribute, MathUtils, OrthographicCamera } from 'three';
+import { Vector3, Color, BufferGeometry, BufferAttribute, MathUtils, Mesh, OrthographicCamera } from 'three';
 import { useFrame } from '@react-three/fiber';
 import { useControls } from 'leva';
 import { Sphere, Billboard, Ring, Plane, Line } from '@react-three/drei';
@@ -13,8 +13,11 @@ import { Sky } from '@react-three/drei';
 import { Line2 } from 'three/examples/jsm/lines/Line2.js';
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js';
 // import Cube from '@/components/three/Cube';
-
+// import SunPath from './three/SunPath';
+// import Floor from './three/Floor';
 import { useSlider } from "@/components/ui/SliderContext";
+import Sunray from './three/Sunray';
+import Gola from '@/components/three/Gola';
 
 
 const RADIUS = 50;
@@ -34,31 +37,68 @@ function getSunColor(y: number) {
   return _color.copy(night).lerp(day, d).toArray();
 }
 
+interface SunSimulationProps {
+  initialLatitude?: number;
+  initialLongitude?: number;
+}
 
-export const SunSimulation = () => {
+export const SunSimulation: React.FC<SunSimulationProps> = ({ initialLatitude, initialLongitude }) => {
+  const { value, setValue } = useSlider();
+  
+
   const { month, longitude, latitude } = useControls({
     month: { value: 4, min: 1, max: 12, step: 0.1 },
-    longitude: { value: 0, min: -179, max: 180, step: 0.1 },
-    latitude: { value: 51, min: -89, max: 89, step: 0.1 },
-    // time: { value: 12, min: 0, max: 23, step: 0.1 },
-    // cube: { value: false, label: 'Cube' },
-    // showCamHelper: false,
-    // cameraScale: { value: 0.2, min: 0.1, max: 2_000_000 },
+    latitude: { 
+      value: initialLatitude || 51, 
+      min: -89, 
+      max: 89, 
+      step: 0.1 
+    },
+    longitude: { 
+      value: initialLongitude || 0, 
+      min: -179, 
+      max: 180, 
+      step: 0.1 
+    }
   });
 
-  const { value, setValue } = useSlider();
   
     const { position, sunPath } = useSun({ latitude, longitude, month, value });
   
-    const { showSunRay, cameraScale } = useControls({
-      showSunRay: false,
+    const [{ showSunRay, cameraScale, opacity, color }, setControls] = useControls(() => ({
+      showSunRay: {
+        value: false,
+        label: 'Show Sun Ray'
+      },
       cameraScale: {
-        value: 0.2,
-        min: 0.1,
-        max: 2_000_000,
+        value: 100,
+        min: 0,
+        max: 200,
+        label: 'Ray Width'
+      },
+      opacity: {
+        value: 0.1,
+        min: 0,
+        max: 1,
+        label: 'Opacity'
+      },
+      color: {
+        value: '#ffff00',
+        label: 'Color'
       }
-    });
+    }));
+
+    useEffect(() => {
+      // Set showSunRay to false whenever slider value changes
+      setControls({ showSunRay: false });
+    }, [value, setControls]);
+
+    
   
+    // const cube = useControls({
+    //   cube: false,
+    // });
+
     const camera = useRef<OrthographicCamera>(null);
 
     useFrame(() => {
@@ -69,7 +109,8 @@ export const SunSimulation = () => {
       camera.current.bottom = cameraScale;
     });
 
-    const sunRayRef = useRef<Line2 | LineSegments2>(null);
+    // const sunRayRef = useRef<Line2 | LineSegments2>(null);
+    const sunRayRef = useRef<Mesh>(null);
 
     useEffect(() => {
       if (sunRayRef.current) {
@@ -86,18 +127,21 @@ export const SunSimulation = () => {
         {/* {cube && <Cube />} */}
         <Analemma latitude={latitude} longitude={longitude} />
         {showSunRay && (
-          <Line
-            ref={sunRayRef as React.Ref<Line2 | LineSegments2>}
-            points={[position, new Vector3(0, 0, 0)]}
-            color="yellow"
-            lineWidth={1}
-          />
+          <Sunray 
+          ref={sunRayRef}
+          position={position}
+          cameraScale={cameraScale}
+          visible={showSunRay}
+          // topRadius={sunrayControls.topRadius}
+          opacity={opacity}
+          color={color}
+        />
         )}
         <directionalLight
           name="SunLight"
           castShadow
           position={position}
-          intensity={position.y >= 0 ? 1.5 * Math.PI : 0}
+          intensity={position.y >= 0 ? 0.01 * Math.PI : 0}
           shadow-mapSize={1024}
         >
           <Sky 
@@ -128,6 +172,7 @@ export const SunSimulation = () => {
           intensity={Math.PI}
         />
         <Floor />
+        <Gola />
       </>
     );
   };
@@ -156,9 +201,8 @@ function Floor() {
   return (
     <Plane
       args={[1000, 1000]}
-      position={[0, -1, 0]}
+      position={[0, 0, 0]}
       rotation={[-90 * MathUtils.DEG2RAD, 0, 0]}
-      receiveShadow
     >
       <shadowMaterial opacity={0.5} />
     </Plane>
