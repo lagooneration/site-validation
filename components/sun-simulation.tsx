@@ -17,7 +17,6 @@ import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js';
 // import Floor from './three/Floor';
 import { useSlider } from "@/components/ui/SliderContext";
 import Sunray from './three/Sunray';
-import Gola from '@/components/three/Gola';
 
 
 const RADIUS = 50;
@@ -65,12 +64,8 @@ export const SunSimulation: React.FC<SunSimulationProps> = ({ initialLatitude, i
   
     const { position, sunPath } = useSun({ latitude, longitude, month, value });
   
-    const [{ showSunRay, cameraScale, opacity, color }, setControls] = useControls(() => ({
-      showSunRay: {
-        value: false,
-        label: 'Show Sun Ray'
-      },
-      cameraScale: {
+    const [{ cameraScale, opacity, color, showSunRay }, setControls] = useControls(() => ({
+        cameraScale: {
         value: 100,
         min: 0,
         max: 200,
@@ -85,6 +80,9 @@ export const SunSimulation: React.FC<SunSimulationProps> = ({ initialLatitude, i
       color: {
         value: '#ffff00',
         label: 'Color'
+      },showSunRay: {
+        value: false,
+        label: 'Ray'
       }
     }));
 
@@ -139,10 +137,8 @@ export const SunSimulation: React.FC<SunSimulationProps> = ({ initialLatitude, i
         )}
         <directionalLight
           name="SunLight"
-          castShadow
           position={position}
-          intensity={position.y >= 0 ? 0.01 * Math.PI : 0}
-          shadow-mapSize={1024}
+          intensity={position.y >= 0 ? .5 * Math.PI : 0}
         >
           <Sky 
             sunPosition={position}
@@ -172,7 +168,6 @@ export const SunSimulation: React.FC<SunSimulationProps> = ({ initialLatitude, i
           intensity={Math.PI}
         />
         <Floor />
-        <Gola />
       </>
     );
   };

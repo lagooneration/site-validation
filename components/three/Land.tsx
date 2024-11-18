@@ -1,6 +1,6 @@
 // PlaneWithTexture.tsx
 import { useLoader } from '@react-three/fiber';
-import { TextureLoader } from 'three';
+import { DoubleSide, TextureLoader } from 'three';
 import { MeshProps } from '@react-three/fiber';
 import { useRef } from 'react';
 import { Mesh } from 'three';
@@ -18,11 +18,11 @@ const Land: React.FC<PlaneWithTextureProps> = ({ texturePath, ...props }) => {
   const meshRef = useRef<Mesh>(null!); // Ref for accessing the mesh if needed
 
   return (
-    <mesh ref={meshRef} {...props} receiveShadow castShadow>
+    <mesh ref={meshRef} {...props}>
       {/* PlaneGeometry: width = 5, height = 5 */}
       <planeGeometry args={[80, 80]} />
       {/* Material with the loaded texture */}
-      <meshBasicMaterial map={texture} />
+      <meshBasicMaterial map={texture} shadowSide={DoubleSide}/>
     </mesh>
   );
 };

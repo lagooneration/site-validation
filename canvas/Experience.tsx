@@ -9,7 +9,7 @@ import { SunSimulation } from '@/components/sun-simulation';
 import { useControls } from 'leva';
 import { Vector3 } from 'three';
 import { useSearchParams } from 'next/navigation';
-
+import Building from '@/components/three/Building';
 
 
 const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage }) => {
@@ -60,14 +60,15 @@ const Experience: React.FC<{ uploadedImage: File | null }> = ({ uploadedImage })
                 </Text>
                 ))}
                 {texturePath && (
-                    <Land texturePath={texturePath} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} />
+                    <Land texturePath={texturePath} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow/>
                 )}
-                {showGrid && <Grid args={[100, 100]} position={[0, -0.5, 0]} />}
+                {showGrid && <Grid args={[100, 100]} position={[0, -1.5, 0]} />}
                 <SunSimulation 
                     initialLatitude={latitude ? parseFloat(latitude) : undefined}
                     initialLongitude={longitude ? parseFloat(longitude) : undefined}
                 />
                 <OrbitControls />
+                <Building />
             </Canvas>
         </>
     );

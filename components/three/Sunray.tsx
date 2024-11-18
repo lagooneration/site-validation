@@ -1,7 +1,7 @@
 import { useMemo, forwardRef, useEffect, useRef } from 'react';
-import { Vector3, Quaternion, SpotLight, SpotLightHelper } from 'three';
+import { Vector3, Quaternion, SpotLight, SpotLightHelper, Mesh, DoubleSide } from 'three';
 import { Cylinder } from '@react-three/drei';
-import * as THREE from 'three';
+import Gola from '@/components/three/Gola';
 
 interface SunrayProps {
   position: Vector3;
@@ -11,7 +11,7 @@ interface SunrayProps {
   color?: string;
 }
 
-const Sunray = forwardRef<THREE.Mesh, SunrayProps>(({
+const Sunray = forwardRef<Mesh, SunrayProps>(({
   position,
   cameraScale,
   visible = true,
@@ -47,8 +47,9 @@ const Sunray = forwardRef<THREE.Mesh, SunrayProps>(({
       position: midPoint,
       quaternion: quaternion,
       height: distance,
-      bottomRadius: 0.5,
-      topRadius: Math.max(0.5, cameraScale * 0.05),
+      bottomRadius: 0.05,
+      // topRadius: Math.max(0.06, cameraScale * 0.05),
+      topRadius: 0.05,
       lightPosition,
     };
   }, [position, cameraScale]);
@@ -95,7 +96,7 @@ const Sunray = forwardRef<THREE.Mesh, SunrayProps>(({
           color={color}
           transparent
           opacity={opacity}
-          side={THREE.DoubleSide}
+          side={DoubleSide}
         />
       </Cylinder>
       <spotLight
@@ -103,14 +104,15 @@ const Sunray = forwardRef<THREE.Mesh, SunrayProps>(({
         position={cylinderProps.lightPosition}
         angle={spotlightAngle}
         penumbra={0.5}
-        intensity={1000}
-        color={'red'}
+        intensity={10000}
+        color={color}
         castShadow
         distance={100}
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
       {spotLightHelperRef.current && <primitive object={spotLightHelperRef.current} />}
+      <Gola />
       </>
   );
 });
