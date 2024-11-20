@@ -1,5 +1,5 @@
 import { useMemo, forwardRef, useEffect, useRef } from 'react';
-import { Vector3, Quaternion, SpotLight, SpotLightHelper, Mesh, DoubleSide } from 'three';
+import { Vector3, Quaternion, SpotLight, Mesh, DoubleSide } from 'three';
 import { Cylinder } from '@react-three/drei';
 import Gola from '@/components/three/Gola';
 
@@ -19,11 +19,9 @@ const Sunray = forwardRef<Mesh, SunrayProps>(({
   color = '#ffff00'
 }, ref) => {
   const spotLightRef = useRef<SpotLight>(new SpotLight(0xffffff, 400, 25, Math.PI / 2, 1, 1));
-  const spotLightHelperRef = useRef<SpotLightHelper | null>(null);
 
   useEffect(() => {
     if (spotLightRef.current) {
-      // spotLightRef.current.position.set(0, 0, 0);
       spotLightRef.current.target.position.set(0, 0, 0);
       spotLightRef.current.target.updateMatrixWorld();
     }
@@ -48,7 +46,6 @@ const Sunray = forwardRef<Mesh, SunrayProps>(({
       quaternion: quaternion,
       height: distance,
       bottomRadius: 0.05,
-      // topRadius: Math.max(0.06, cameraScale * 0.05),
       topRadius: 0.05,
       lightPosition,
     };
@@ -57,24 +54,6 @@ const Sunray = forwardRef<Mesh, SunrayProps>(({
   const spotlightAngle = useMemo(() => {
     return 0.004 + (cameraScale / 200) * (1.000 - 0.004);
   }, [cameraScale]);
-
-  useEffect(() => {
-    if (spotLightRef.current && !spotLightHelperRef.current) {
-      spotLightHelperRef.current = new SpotLightHelper(spotLightRef.current);
-    }
-    return () => {
-      if (spotLightHelperRef.current) {
-        spotLightHelperRef.current.dispose();
-        spotLightHelperRef.current = null;
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (spotLightHelperRef.current) {
-      spotLightHelperRef.current.update();
-    }
-  }, [spotlightAngle, position]);
 
   if (!visible) return null;
 
@@ -111,9 +90,8 @@ const Sunray = forwardRef<Mesh, SunrayProps>(({
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
-      {spotLightHelperRef.current && <primitive object={spotLightHelperRef.current} />}
       <Gola />
-      </>
+    </>
   );
 });
 

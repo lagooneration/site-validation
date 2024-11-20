@@ -82,7 +82,7 @@ export const SunSimulation: React.FC<SunSimulationProps> = ({ initialLatitude, i
         label: 'Color'
       },showSunRay: {
         value: false,
-        label: 'Ray'
+        label: 'Sun Ray'
       }
     }));
 
@@ -186,7 +186,7 @@ function SunPath({ path }: { path: Vector3[] }) {
 
   return (
     <line geometry={geometry}>
-      <lineBasicMaterial color="white" vertexColors />
+      <lineBasicMaterial color="white" vertexColors/>
     </line>
   );
 }
