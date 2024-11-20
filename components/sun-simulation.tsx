@@ -77,10 +77,7 @@ export const SunSimulation: React.FC<SunSimulationProps> = ({ initialLatitude, i
         max: 1,
         label: 'Opacity'
       },
-      color: {
-        value: '#ffff00',
-        label: 'Color'
-      },showSunRay: {
+      showSunRay: {
         value: false,
         label: 'Sun Ray'
       }
@@ -132,7 +129,6 @@ export const SunSimulation: React.FC<SunSimulationProps> = ({ initialLatitude, i
           visible={showSunRay}
           // topRadius={sunrayControls.topRadius}
           opacity={opacity}
-          color={color}
         />
         )}
         <directionalLight

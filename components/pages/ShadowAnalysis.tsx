@@ -61,6 +61,15 @@ const DefaultImagePlaceholder = () => (
 
 
 const ShadowAnalysis: React.FC = () => {
+  const handleScreenshot = (dataUrl: string) => {
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = dataUrl;
+    link.download = `shadow-analysis-${new Date().toISOString()}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
 
 const searchParams = useSearchParams()
 
@@ -150,8 +159,8 @@ const searchParams = useSearchParams()
             </form>
           </div>
           <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
-            <div className="w-[1086px] h-[800px]">
-                <Experience uploadedImage={uploadedImage} />
+            <div className="relative w-full aspect-[4/3] max-w-[1096px] max-h-[800px] mx-auto">
+                <Experience uploadedImage={uploadedImage} onScreenshot={handleScreenshot}/>
             </div>
             <Badge variant="outline" className="absolute left-6 top-6">
               Output

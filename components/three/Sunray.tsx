@@ -8,15 +8,13 @@ interface SunrayProps {
   cameraScale: number;
   visible?: boolean;
   opacity?: number;
-  color?: string;
 }
 
 const Sunray = forwardRef<Mesh, SunrayProps>(({
   position,
   cameraScale,
   visible = true,
-  opacity = 0.2,
-  color = '#ffff00'
+  opacity = 0.2
 }, ref) => {
   const spotLightRef = useRef<SpotLight>(new SpotLight(0xffffff, 400, 25, Math.PI / 2, 1, 1));
 
@@ -72,7 +70,7 @@ const Sunray = forwardRef<Mesh, SunrayProps>(({
         quaternion={cylinderProps.quaternion}
       >
         <meshBasicMaterial
-          color={color}
+          color='yellow'
           transparent
           opacity={opacity}
           side={DoubleSide}
@@ -84,7 +82,7 @@ const Sunray = forwardRef<Mesh, SunrayProps>(({
         angle={spotlightAngle}
         penumbra={0.5}
         intensity={10000}
-        color={color}
+        color='yellow'
         castShadow
         distance={100}
         shadow-mapSize-width={1024}
